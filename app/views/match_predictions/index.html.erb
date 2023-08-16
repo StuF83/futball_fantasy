@@ -1,0 +1,16 @@
+<h1>MATCH PREDICTION</h1>
+
+<%= form_with model: @user do |form| %>
+  Addresses:
+  <ul>
+    <%= form.fields_for :match_prediction do |match_prediction_form| %>
+      <li>
+        <%= match_prediction_form.label :arsenal_v_chelsea %>
+        <%= match_prediction_form.text_field :arsenal_v_chelsea %>
+
+        <%= match_prediction_form.label :tottenham_v_west_ham %>
+        <%= match_prediction_form.text_field :tottenham_v_west_ham %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
