@@ -1,1 +1,6 @@
 <h1>Matches index page</h1>
+
+<% @matches.each do |match| %>
+  <p><%= match.home_score %></p>
+  <p><%= match.away_score %></p>
+<% end %>
