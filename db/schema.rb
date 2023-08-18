@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_090525) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_18_083524) do
+  create_table "game_weeks", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "week_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "matches", force: :cascade do |t|
     t.string "home_team"
     t.string "away_team"
