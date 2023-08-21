@@ -1,5 +1,11 @@
 <p>hello world</p>
 
+<% if @game_week.errors.any? %>
+  <% @game_week.errors.full_messages.each do |error| %>
+    <p><%= error %></p>
+  <% end %>
+<% end %>
+
 <%= form_with model: @game_week do |f| %>
   <%= f.label :start_date %>
   <%= f.date_field :start_date%>

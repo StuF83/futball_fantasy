@@ -26,11 +26,13 @@ class GameWeeksController < ApplicationController
         @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"]  )
         @match.game_week = @game_week
         @match.save
+      redirect_to game_week_path(@game_week) and return
       end
-      redirect_to game_week_path(@game_week)
     else
-      raise
-      render 'new'
+      # raise
+      # p @game_week.errors.any?
+      # p @game_week.errors.full_messages
+      render :new, status: 422
     end
   end
 
