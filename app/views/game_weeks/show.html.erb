@@ -1,2 +1,20 @@
 <p>Show</p>
 <%= @game_week.week_number %>
+
+
+<% @game_week.matches.each do |match| %>
+  <p><%= match[:home_team] %></p>
+  <p><%= match[:away_team] %></p>
+  <% if match[:home_score] == nil %>
+    <p>-</p>
+  <% else %>
+    <p><%= match[:home_score] %></p>
+  <% end %>
+  <% if match[:away_score] == nil %>
+    <p>-</p>
+  <% else %>
+    <p><%= match[:away_score] %></p>
+  <% end %>
+  <br>
+
+<% end %>
