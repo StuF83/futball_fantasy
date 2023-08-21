@@ -5,6 +5,7 @@ class GameWeeksController < ApplicationController
 
   def show
     @game_week = GameWeek.find(params[:id])
+    # .includes(:matches)
   end
 
   def new
