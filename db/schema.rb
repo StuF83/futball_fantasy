@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_094440) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_20_115427) do
+  create_table "game_weeks", force: :cascade do |t|
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "week_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "match_predictions", force: :cascade do |t|
     t.integer "home_score_guess"
     t.integer "away_score_guess"
@@ -18,6 +26,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_094440) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_match_predictions_on_user_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.string "home_team"
+    t.string "away_team"
+    t.integer "home_score"
+    t.integer "away_score"
+    t.date "scheduled_date"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "game_week_id"
+    t.index ["game_week_id"], name: "index_matches_on_game_week_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,4 +54,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_094440) do
   end
 
   add_foreign_key "match_predictions", "users"
+  add_foreign_key "matches", "game_weeks"
 end

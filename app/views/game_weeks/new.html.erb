@@ -1,0 +1,11 @@
+<p>hello world</p>
+
+<%= form_with model: @game_week do |f| %>
+  <%= f.label :start_date %>
+  <%= f.date_field :start_date%>
+  <%= f.label :end_date %>
+  <%= f.date_field :end_date%>
+  <%= f.label :week_number %>
+  <%= f.number_field :week_number%>
+  <%= f.submit %>
+<% end %>
