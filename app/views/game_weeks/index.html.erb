@@ -1,7 +1,7 @@
 <h1>Game_weeks index page</h1>
 
 <% @game_weeks.each do |game_week| %>
-  <p><%= game_week.week_number %></p>
+  <%= link_to game_week.week_number, game_week_path(game_week) %>
   <p><%= game_week.start_date %></p>
   <p><%= game_week.end_date %></p>
   <br>
