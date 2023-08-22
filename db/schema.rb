@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_20_115427) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_22_124213) do
   create_table "game_weeks", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
@@ -25,6 +25,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_115427) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "match_id", null: false
+    t.index ["match_id"], name: "index_match_predictions_on_match_id"
     t.index ["user_id"], name: "index_match_predictions_on_user_id"
   end
 
@@ -53,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_20_115427) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "match_predictions", "matches"
   add_foreign_key "match_predictions", "users"
   add_foreign_key "matches", "game_weeks"
 end
