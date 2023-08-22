@@ -1,7 +1,18 @@
 class MatchPredictionsController < ApplicationController
   def index
     @user = current_user
-    @match_prediction = MatchPrediction.new
+    # Here I am trying to map the form in the match_prediction/index to the matches
+    # I need a week and some matches, so I am just setting @week = GameWeek.last
+    @week = GameWeek.last
+    @matches = @week.matches
+
+    # Below, @empty_guesses is an empty array. We iterate over @matches, and for each match we are
+    # creating an empty MatchPrediction and storing it in the empty array. This is like having
+    # @match_prediction = MatchPrediction.new if the form was linked to one instance of the class.
+    @empty_guesses = []
+    @matches.each do |match|
+      @empty_guesses.push(MatchPrediction.new)
+    end
   end
 
   def create
