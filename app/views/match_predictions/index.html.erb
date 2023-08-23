@@ -1,10 +1,16 @@
 <h1>MATCH PREDICTION</h1>
 
-<%= form_with url: match_predictions_path do |form| %>
-  <%= form.text_field :home_score_guess_0%>
-  <%= form.text_field :away_score_guess_0 %>
-  <%= form.text_field :home_score_guess_1 %>
-  <%= form.text_field :away_score_guess_1 %>
-  <%= form.hidden_field :user_id, value: current_user.id %>
-  <%= form.submit %>
+
+<%= form_with url: "/match_predictions" do |f| %>
+  <% @empty_predictions.each do |prediction| %>
+    <%= fields_for "predictions[]", prediction do |p| %>
+      <% match = @matches[@empty_predictions.index(prediction)] %>
+      <%= p.label "#{match.home_team} VS #{match.away_team}" %>
+      <%= p.number_field :home_score_guess %>
+      <%= p.number_field :away_score_guess %>
+      <%= p.hidden_field :match_id, value: match.id %>
+    <% end %>
+  <% end %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= f.submit %>
 <% end %>

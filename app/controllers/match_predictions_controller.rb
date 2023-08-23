@@ -6,17 +6,17 @@ class MatchPredictionsController < ApplicationController
     @week = GameWeek.last
     @matches = @week.matches
 
-    # Below, @empty_guesses is an empty array. We iterate over @matches, and for each match we are
+    # Below, @empty_predictions is an empty array. We iterate over @matches, and for each match we are
     # creating an empty MatchPrediction and storing it in the empty array. This is like having
     # @match_prediction = MatchPrediction.new if the form was linked to one instance of the class.
-    @empty_guesses = []
+    @empty_predictions = []
     @matches.each do |match|
-      @empty_guesses.push(MatchPrediction.new)
+      @empty_predictions.push(MatchPrediction.new)
     end
   end
 
   def create
-
+    raise
     answer1 = {home_score_guess: params["home_score_guess_0"], away_score_guess: params['away_score_guess_0'], user_id: params[:user_id] }
     answer2 = {home_score_guess: params["home_score_guess_1"], away_score_guess: params['away_score_guess_1'], user_id: params[:user_id] }
     @match_prediction = MatchPrediction.new(answer1)
@@ -38,6 +38,6 @@ class MatchPredictionsController < ApplicationController
   private
 
   def match_prediction_params
-    params.require(:match_prediction).permit(:home_score_guess, :away_score_guess, :user_id)
+    params.require(:match_prediction).permit(:home_score_guess, :away_score_guess, :user_id, :match_id)
   end
 end
