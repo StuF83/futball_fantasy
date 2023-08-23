@@ -16,22 +16,33 @@ class MatchPredictionsController < ApplicationController
   end
 
   def create
-    raise
-    answer1 = {home_score_guess: params["home_score_guess_0"], away_score_guess: params['away_score_guess_0'], user_id: params[:user_id] }
-    answer2 = {home_score_guess: params["home_score_guess_1"], away_score_guess: params['away_score_guess_1'], user_id: params[:user_id] }
-    @match_prediction = MatchPrediction.new(answer1)
-    # @match_prediction2 = MatchPrediction.new(answer2)
-    if @match_prediction.save
-      send_guesses(@match_prediction)
-      redirect_to match_predictions_path
-    else
-      render :new, status: :unprocessable_entity
+    @predictions = []
+    params["predictions"].each do |prediction|
+      @match_prediction = MatchPrediction.new(home_score_guess: prediction["home_score_guess"],
+                          away_score_guess: prediction["away_score_guess"],
+                          user_id: current_user.id,
+                          match_id: prediction["match_id"])
+
+      if @match_prediction.save
+        @predictions << @match_prediction
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
+
+    send_guesses(@predictions)
+    redirect_to root_path
   end
 
-  def send_guesses(guess)
+  def send_guesses(predictions)
+    message = "Here are #{current_user.email}'s guesses!\n"
+    predictions.each do |prediction|
+      message += "#{prediction.match.home_team} VS #{prediction.match.away_team}" +
+                  "  #{prediction.home_score_guess} - #{prediction.away_score_guess}\n"
+    end
+
     bot = Discordrb::Bot.new token: 'MTEzNTg4MjYxMTA0MzA3ODI1OA.GDRsNT.Ewjcmww20_OJTnUYRuSsfIAxz8xK5Z-6VV4xJc'
-    bot.send_message("1135660158635233323", "Here are #{guess.user.email}'s guesses! Arsenal - Chelsea #{guess.home_score_guess} - #{guess.away_score_guess}")
+    bot.send_message("1135660158635233323", message)
     bot.run
   end
 
