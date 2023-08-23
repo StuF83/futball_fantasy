@@ -44,6 +44,8 @@ class MatchPredictionsController < ApplicationController
     bot = Discordrb::Bot.new token: 'MTEzNTg4MjYxMTA0MzA3ODI1OA.GDRsNT.Ewjcmww20_OJTnUYRuSsfIAxz8xK5Z-6VV4xJc'
     bot.send_message("1135660158635233323", message)
     bot.run
+    raise
+    bot.kill
   end
 
   private
