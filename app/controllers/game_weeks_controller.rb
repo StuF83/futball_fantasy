@@ -14,9 +14,8 @@ class GameWeeksController < ApplicationController
 
   def create
     @game_week = GameWeek.new(game_week_params)
-    # @game_week.save
     if @game_week.save
-     season = '2023'
+      season = '2023'
       football_data_api = Rails.application.credentials.football_data_api
       api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}&dateFrom=#{game_week_params[:start_date]}&dateTo=#{game_week_params[:end_date]}",
         "X-Auth-Token" => football_data_api
@@ -26,8 +25,8 @@ class GameWeeksController < ApplicationController
         @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"]  )
         @match.game_week = @game_week
         @match.save
-      redirect_to game_week_path(@game_week) and return
       end
+      redirect_to game_week_path(@game_week) and return
     else
       render :new, status: 422
     end
