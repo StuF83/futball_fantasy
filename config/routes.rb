@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   post 'game_weeks', to: 'game_weeks#create'
   get 'game_weeks/:id', to: 'game_weeks#show', as: 'game_week'
 
+  resources :match_predictions, only: [:index, :new, :create]
 
 end

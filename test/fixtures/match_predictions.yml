@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  home_score_guess: 1
+  away_score_guess: 1
+  user: one
+
+two:
+  home_score_guess: 1
+  away_score_guess: 1
+  user: two

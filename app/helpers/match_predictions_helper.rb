@@ -1,0 +1,2 @@
+module MatchPredictionsHelper
+end
