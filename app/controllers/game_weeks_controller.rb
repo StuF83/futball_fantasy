@@ -14,7 +14,7 @@ class GameWeeksController < ApplicationController
 
   def create
     @game_week = GameWeek.new(game_week_params)
-    @game_week.save
+    # @game_week.save
     if @game_week.save
      season = '2023'
       football_data_api = Rails.application.credentials.football_data_api
@@ -29,9 +29,6 @@ class GameWeeksController < ApplicationController
       redirect_to game_week_path(@game_week) and return
       end
     else
-      # raise
-      # p @game_week.errors.any?
-      # p @game_week.errors.full_messages
       render :new, status: 422
     end
   end
