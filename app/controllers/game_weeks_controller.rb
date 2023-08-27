@@ -23,13 +23,18 @@ class GameWeeksController < ApplicationController
       data = JSON.parse(api_data)
       data['matches'].each do |match|
         @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"]  )
-        @match.game_week = @game_week
         @match.save
+        @game_week.matches << @match
       end
       redirect_to game_week_path(@game_week) and return
     else
       render :new, status: 422
     end
+  end
+
+  def destroy
+    # when the game week is destroyed, we don't want to delete the corresoponding matches. The matches need to have their foreign key id removed.
+    # we need a join table between matches and game_weeks? A game week can have many matches, a match can belong to many game_weeks, or none...
   end
 
   private

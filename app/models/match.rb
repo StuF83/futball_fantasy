@@ -1,4 +1,5 @@
 class Match < ApplicationRecord
-  belongs_to :game_week, optional: true
+  has_many :game_week_matches
+  has_many :game_weeks, through: :game_week_matches
   has_many :match_predictions
 end
