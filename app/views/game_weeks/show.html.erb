@@ -1,5 +1,8 @@
 <p>Game Week <%= @game_week.week_number %></p>
 
+<%= link_to 'DELETE', destroy_game_week_path, data: { "turbo-method": :delete } %>
+
+
 
 
 <% @game_week.matches.each do |match| %>

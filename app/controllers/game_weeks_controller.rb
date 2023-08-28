@@ -5,7 +5,6 @@ class GameWeeksController < ApplicationController
 
   def show
     @game_week = GameWeek.find(params[:id])
-    # .includes(:matches)
   end
 
   def new
@@ -23,13 +22,19 @@ class GameWeeksController < ApplicationController
       data = JSON.parse(api_data)
       data['matches'].each do |match|
         @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"]  )
-        @match.game_week = @game_week
         @match.save
+        @game_week.matches << @match
       end
       redirect_to game_week_path(@game_week) and return
     else
       render :new, status: 422
     end
+  end
+
+  def destroy
+    game_week = GameWeek.find(params[:id])
+    game_week.destroy
+    redirect_to game_weeks_path, status: :see_other
   end
 
   private
