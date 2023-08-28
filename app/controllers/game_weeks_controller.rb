@@ -5,7 +5,6 @@ class GameWeeksController < ApplicationController
 
   def show
     @game_week = GameWeek.find(params[:id])
-    # .includes(:matches)
   end
 
   def new
@@ -33,8 +32,9 @@ class GameWeeksController < ApplicationController
   end
 
   def destroy
-    # when the game week is destroyed, we don't want to delete the corresoponding matches. The matches need to have their foreign key id removed.
-    # we need a join table between matches and game_weeks? A game week can have many matches, a match can belong to many game_weeks, or none...
+    game_week = GameWeek.find(params[:id])
+    game_week.destroy
+    redirect_to game_weeks_path, status: :see_other
   end
 
   private
