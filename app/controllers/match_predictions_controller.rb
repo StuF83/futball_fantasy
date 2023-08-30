@@ -48,12 +48,11 @@ class MatchPredictionsController < ApplicationController
     # here we are creating a new bot, which I have already invited to the channel,
     # and using the send_message method on the bot, which takes two parameters: channelid and message
     bot = Discordrb::Bot.new token: Rails.application.credentials.discord_bot_token
-    bot.send_message("1135660158635233323", message)
+    bot.ready do |event|
+      bot.send_message("1135660158635233323", message)
+      bot.stop
+    end
     bot.run
-    # here there is still an issue, becasue when the bot.run command uses websocket to open a channel
-    # that channel stays open and the page gets stuck - NEED TO SORT THAT
-    raise
-    bot.kill
   end
 
   private
