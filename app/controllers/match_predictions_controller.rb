@@ -15,6 +15,16 @@ class MatchPredictionsController < ApplicationController
     end
   end
 
+  def new
+    @user = current_user
+    @game_week = GameWeek.find(params[:game_week_id])
+    @matches = @game_week.matches
+    @empty_predictions = []
+    @matches.each do |match|
+      @empty_predictions.push(MatchPrediction.new)
+    end
+  end
+
   def create
     # based on the params sent through, we create an array to fill with newly created
     # instances of the MatchPrediction class.
