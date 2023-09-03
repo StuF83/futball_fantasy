@@ -1,5 +1,9 @@
 class MatchPredictionsController < ApplicationController
   def index
+
+    #get all users, get all match_predictions, get all points
+
+
     @user = current_user
     # Here I am trying to map the form in the match_prediction/index to the matches
     # I need a week and some matches, so I am just setting @week = GameWeek.last
@@ -19,9 +23,10 @@ class MatchPredictionsController < ApplicationController
     @user = current_user
     @game_week = GameWeek.find(params[:game_week_id])
     @matches = @game_week.matches
-    @empty_predictions = []
     @matches.each do |match|
-      @empty_predictions.push(MatchPrediction.new)
+      match_prediction = match.match_predictions.build
+      match_prediction.user = current_user
+      match_prediction.save
     end
   end
 
@@ -38,12 +43,20 @@ class MatchPredictionsController < ApplicationController
       if @match_prediction.save
         @predictions << @match_prediction
       else
+        raise
         render :new, status: :unprocessable_entity
       end
     end
     # after creating all instances, we send the array to the send_guesses method which will
     # deal with turning the guesses into a string, creating a bot and sending a message to the channel
-    send_guesses(@predictions)
+    # send_guesses(@predictions)
+  end
+
+  def show
+    @user = current_user
+    @game_week = GameWeek.find(params[:game_week_id])
+    p @user_match_predictions = MatchPrediction.where(user_id: @user.id)
+    # @user_matches = Match.joins(:match_predictions).where(match_predictions: {user_id: @user.id})
   end
 
   def send_guesses(predictions)

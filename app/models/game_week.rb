@@ -2,6 +2,8 @@ class GameWeek < ApplicationRecord
   has_many :game_week_matches
   has_many :matches, through: :game_week_matches, dependent: :destroy
 
+  accepts_nested_attributes_for :matches
+
   validates :start_date, :end_date, :week_number, presence: true
   validates :start_date, comparison: { less_than: :end_date }
   validate :cannot_overlap_another_game_week

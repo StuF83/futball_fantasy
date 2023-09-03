@@ -3,16 +3,24 @@ new match predicions
 <p><%= @game_week.id %></p>
 
 
-<%= form_with url: "/match_predictions" do |f| %>
-  <% @empty_predictions.each do |prediction| %>
-    <%= fields_for "predictions[]", prediction do |p| %>
-      <% match = @matches[@empty_predictions.index(prediction)] %>
-      <%= p.label "#{match.home_team} VS #{match.away_team}" %>
-      <%= p.number_field :home_score_guess %>
-      <%= p.number_field :away_score_guess %>
-      <%= p.hidden_field :match_id, value: match.id %>
+
+
+
+
+
+
+
+
+<%= form_with model: @game_week do |f| %>
+  <% @game_week.matches.each do |match| %>
+    <%= f.fields_for :match, match do |match_fields| %>
+      <%= match_fields.label :home_team %>
+      <%= match_fields.text_field :home_team %>
+      <% match_prediction = match.match_predictions.where(user_id: current_user.id, match_id: match.id) %>
+      <%= match_fields.fields_for :match_predictions, match_prediction do |mp_fields| %>
+        <%= mp_fields.label :home_score_guess %>
+      <% end %>
     <% end %>
   <% end %>
-  <%= f.hidden_field :user_id, value: current_user.id %>
   <%= f.submit %>
 <% end %>
