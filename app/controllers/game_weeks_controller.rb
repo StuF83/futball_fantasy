@@ -26,7 +26,6 @@ class GameWeeksController < ApplicationController
         @match.save
         @game_week.matches << @match
       end
-      # build_player_match_predictions
       redirect_to game_week_path(@game_week) and return
     else
       render :new, status: 422
@@ -34,18 +33,11 @@ class GameWeeksController < ApplicationController
   end
 
   def edit
-    @game_week = GameWeek.find(params[:id])
-    @match_predictions = @game_week.match_predictions.where(user_id: current_user.id)
+
   end
 
   def update
-    @game_week = GameWeek.find(params[:id])
-    @game_week.matches.each do |match|
-      prediction = match.match_predictions.where(user_id: current_user.id, match_id: match.id)[0]
-      prediction.home_score_guess = game_week_params[:match_prediction][prediction.id][home_score_guess]
-      prediction.home_score_guess = game_week_params[:match_prediction][prediction.id][away_score_guess]
-      prediction.save
-    end
+
   end
 
   def destroy

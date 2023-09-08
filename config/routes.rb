@@ -7,10 +7,11 @@ Rails.application.routes.draw do
 
   get 'matches/index', to: 'matches#index'
 
-  get 'game_weeks/index', to: 'game_weeks#index'
+  get 'game_weeks', to: 'game_weeks#index'
   get 'game_weeks/new', to: 'game_weeks#new'
   post 'game_weeks', to: 'game_weeks#create'
   get 'game_weeks/:id', to: 'game_weeks#show', as: 'game_week'
+  delete 'game_weeks/:id', to: 'game_weeks#destroy'
 
   resources :match_predictions, only: [:index, :new, :create]
 end
