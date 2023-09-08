@@ -14,8 +14,6 @@ class MatchPredictionsController < ApplicationController
   end
 
   def create
-    # based on the params sent through, we create an array to fill with newly created
-    # instances of the MatchPrediction class.
     @predictions = []
     params["predictions"].each do |prediction|
       @match_prediction = MatchPrediction.new(home_score_guess: prediction["home_score_guess"],
@@ -29,9 +27,7 @@ class MatchPredictionsController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
-    # after creating all instances, we send the array to the send_guesses method which will
-    # deal with turning the guesses into a string, creating a bot and sending a message to the channel
-    send_guesses(@predictions)
+    # send_guesses(@predictions)
   end
 
   def send_guesses(predictions)
