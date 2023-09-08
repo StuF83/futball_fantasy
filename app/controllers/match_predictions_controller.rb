@@ -5,14 +5,8 @@ class MatchPredictionsController < ApplicationController
 
   def new
     @user = current_user
-    # Here I am trying to map the form in the match_prediction/index to the matches
-    # I need a week and some matches, so I am just setting @week = GameWeek.last
-    @week = GameWeek.last
+    @week = GameWeek.find(params[:game_week_id])
     @matches = @week.matches
-
-    # Below, @empty_predictions is an empty array. We iterate over @matches, and for each match we are
-    # creating an empty MatchPrediction and storing it in the empty array. This is like having
-    # @match_prediction = MatchPrediction.new if the form was linked to one instance of the class.
     @empty_predictions = []
     @matches.each do |match|
       @empty_predictions.push(MatchPrediction.new)
@@ -65,4 +59,8 @@ class MatchPredictionsController < ApplicationController
   def match_prediction_params
     params.require(:match_prediction).permit(:home_score_guess, :away_score_guess, :user_id, :match_id)
   end
+
+  # def new_match_prediction_params
+  #   params.require(:game_week).permit(:game_week_id)
+  # end
 end

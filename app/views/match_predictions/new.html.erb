@@ -1,6 +1,6 @@
 new match predicions
 
-<%= form_with url: "/match_predictions" do |f| %>
+<%= form_with url: new_game_week_match_prediction_path do |f| %>
   <% @empty_predictions.each do |prediction| %>
     <%= fields_for "predictions[]", prediction do |p| %>
       <% match = @matches[@empty_predictions.index(prediction)] %>
