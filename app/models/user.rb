@@ -4,4 +4,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :match_predictions
+
+  accepts_nested_attributes_for :match_predictions
 end

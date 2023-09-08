@@ -1,6 +1,7 @@
 class GameWeek < ApplicationRecord
   has_many :game_week_matches
   has_many :matches, through: :game_week_matches, dependent: :destroy
+  has_many :match_predictions, through: :matches
 
   accepts_nested_attributes_for :matches
 
