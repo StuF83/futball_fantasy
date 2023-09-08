@@ -1,5 +1,9 @@
 class MatchPredictionsController < ApplicationController
   def index
+
+  end
+
+  def new
     @user = current_user
     # Here I am trying to map the form in the match_prediction/index to the matches
     # I need a week and some matches, so I am just setting @week = GameWeek.last
