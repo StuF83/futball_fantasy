@@ -1,14 +1,14 @@
 class MatchPredictionsController < ApplicationController
   def index
     @user = current_user
-    # Here I am trying to map the form in the match_prediction/index to the matches
-    # I need a week and some matches, so I am just setting @week = GameWeek.last
-    @week = GameWeek.last
-    @matches = @week.matches
+    @game_week = GameWeek.find(params[:game_week_id])
+    @match_predictions = GameWeek.find(params[:game_week_id]).match_predictions
+  end
 
-    # Below, @empty_predictions is an empty array. We iterate over @matches, and for each match we are
-    # creating an empty MatchPrediction and storing it in the empty array. This is like having
-    # @match_prediction = MatchPrediction.new if the form was linked to one instance of the class.
+  def new
+    @user = current_user
+    @week = GameWeek.find(params[:game_week_id])
+    @matches = @week.matches
     @empty_predictions = []
     @matches.each do |match|
       @empty_predictions.push(MatchPrediction.new)
@@ -16,8 +16,6 @@ class MatchPredictionsController < ApplicationController
   end
 
   def create
-    # based on the params sent through, we create an array to fill with newly created
-    # instances of the MatchPrediction class.
     @predictions = []
     params["predictions"].each do |prediction|
       @match_prediction = MatchPrediction.new(home_score_guess: prediction["home_score_guess"],
@@ -31,9 +29,16 @@ class MatchPredictionsController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
-    # after creating all instances, we send the array to the send_guesses method which will
-    # deal with turning the guesses into a string, creating a bot and sending a message to the channel
-    send_guesses(@predictions)
+    # send_guesses(@predictions)
+  end
+
+  def edit
+    @match_prediction = MatchPrediction.find(params[:id])
+  end
+
+  def update
+    @match_prediction = MatchPrediction.find(params[:id])
+    @match_prediction.update(match_prediction_params)
   end
 
   def send_guesses(predictions)
