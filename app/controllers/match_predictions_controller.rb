@@ -1,6 +1,8 @@
 class MatchPredictionsController < ApplicationController
   def index
-
+    @user = current_user
+    @game_week = GameWeek.find(params[:game_week_id])
+    @match_predictions = GameWeek.find(params[:game_week_id]).match_predictions
   end
 
   def new
@@ -30,6 +32,15 @@ class MatchPredictionsController < ApplicationController
     # send_guesses(@predictions)
   end
 
+  def edit
+    @match_prediction = MatchPrediction.find(params[:id])
+  end
+
+  def update
+    @match_prediction = MatchPrediction.find(params[:id])
+    @match_prediction.update(match_prediction_params)
+  end
+
   def send_guesses(predictions)
     # here we are creating a message, then iterating over the prediction and appending them
     # to the string
@@ -55,8 +66,4 @@ class MatchPredictionsController < ApplicationController
   def match_prediction_params
     params.require(:match_prediction).permit(:home_score_guess, :away_score_guess, :user_id, :match_id)
   end
-
-  # def new_match_prediction_params
-  #   params.require(:game_week).permit(:game_week_id)
-  # end
 end

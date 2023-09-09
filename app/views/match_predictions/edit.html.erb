@@ -1,0 +1,9 @@
+<p>edit match prediction</p>
+
+<%= form_with model: @match_prediction do |form| %>
+  <%= @match_prediction.match.home_team %>
+  <%= form.number_field :home_score_guess  %>
+    <%= @match_prediction.match.away_team %>
+  <%= form.number_field :away_score_guess  %>
+  <%= form.submit %>
+<% end %>

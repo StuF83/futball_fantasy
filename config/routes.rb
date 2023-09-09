@@ -17,4 +17,5 @@ Rails.application.routes.draw do
     resources :match_predictions, only: [:index, :new, :create]
   end
 
+  resources :match_predictions, only: [:edit, :update]
 end
