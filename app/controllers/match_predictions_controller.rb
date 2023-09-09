@@ -38,7 +38,11 @@ class MatchPredictionsController < ApplicationController
 
   def update
     @match_prediction = MatchPrediction.find(params[:id])
-    @match_prediction.update(match_prediction_params)
+    if @match_prediction.update(match_prediction_params)
+    else
+      raise
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def send_guesses(predictions)
