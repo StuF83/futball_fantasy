@@ -38,7 +38,13 @@ class MatchPredictionsController < ApplicationController
 
   def update
     @match_prediction = MatchPrediction.find(params[:id])
-    @match_prediction.update(match_prediction_params)
+    if @match_prediction.update(match_prediction_params)
+      #need to add a redirect here
+      #also an updated bot message to discord
+    else
+      raise
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def send_guesses(predictions)
