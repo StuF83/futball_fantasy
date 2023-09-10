@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   get 'matches/index', to: 'matches#index'
 
-  resources :competitions, only: [:show]
+  resources :competitions, only: [:index, :show]
 
   resources :game_weeks do
     resources :match_predictions, only: [:index, :new, :create]
