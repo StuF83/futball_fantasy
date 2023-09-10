@@ -1,3 +1,4 @@
 class Competition < ApplicationRecord
-  has_many :users, through: :competitions_users
+  has_many :user_competitions
+  has_many :users, through: :user_competitions
 end

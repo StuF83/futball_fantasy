@@ -10,16 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_10_130523) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_10_132301) do
   create_table "competitions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "competitions_users", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "competition_id", null: false
   end
 
   create_table "game_week_matches", force: :cascade do |t|
@@ -61,6 +56,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_130523) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_competitions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "competition_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id"], name: "index_user_competitions_on_competition_id"
+    t.index ["user_id"], name: "index_user_competitions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -77,4 +81,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_130523) do
   add_foreign_key "game_week_matches", "matches"
   add_foreign_key "match_predictions", "matches"
   add_foreign_key "match_predictions", "users"
+  add_foreign_key "user_competitions", "competitions"
+  add_foreign_key "user_competitions", "users"
 end
