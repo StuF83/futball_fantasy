@@ -12,9 +12,8 @@ instances of Prediction) and for each of the predictions we are creating form fi
     <%= fields_for "predictions[]", prediction do |p| %>
     <%# Here we are finding the matches the predictions will be associated with. We are retrieving
    'match' from the @matches array using an index. Since the @empty_predictions array is based on the
-   @matches array, we can use the index of the current prediction in the @empty_predictions
-   array to look for the corrisponding match.
-   ACTUALLY --> a match prediction belongs to a match, so an easier way of doign this is prediction.match? %>
+   @matches array, we can use the index of the current prediction in the @empty_predictions %>
+
       <% match = @matches[@empty_predictions.index(prediction)] %>
       <%= p.label "#{match.home_team} VS #{match.away_team}" %>
       <%= p.number_field :home_score_guess %>
