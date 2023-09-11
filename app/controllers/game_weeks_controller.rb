@@ -19,6 +19,7 @@ class GameWeeksController < ApplicationController
       api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}&dateFrom=#{game_week_params[:start_date]}&dateTo=#{game_week_params[:end_date]}",
         "X-Auth-Token" => football_data_api
       ).read
+
       data = JSON.parse(api_data)
       data['matches'].each do |match|
         @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"]  )
@@ -31,6 +32,14 @@ class GameWeeksController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
+  def update
+
+  end
+
   def destroy
     game_week = GameWeek.find(params[:id])
     game_week.destroy
@@ -40,6 +49,17 @@ class GameWeeksController < ApplicationController
   private
 
   def game_week_params
-    params.require(:game_week).permit(:start_date, :end_date, :week_number )
+    params.require(:game_week).permit(:start_date, :end_date, :week_number, matches_attributes: [:match_predictions_attributes => {}])
+  end
+
+  def build_player_match_predictions
+    @players = User.all
+    @game_week.matches.each do |match|
+      @players.each do |player|
+        match_prediction = match.match_predictions.build
+        match_prediction.user = player
+        match_prediction.save
+      end
+    end
   end
 end

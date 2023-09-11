@@ -1,6 +1,10 @@
 <h1>Matches index page</h1>
 
 <% @matches.each do |match| %>
+<p><%= match.home_team %></p>
   <p><%= match.home_score %></p>
+  <p><%= match.away_team %></p>
   <p><%= match.away_score %></p>
+  <p><%= match.scheduled_date %></p>
+  <br>
 <% end %>

@@ -1,6 +1,10 @@
 class GameWeek < ApplicationRecord
   has_many :game_week_matches
   has_many :matches, through: :game_week_matches, dependent: :destroy
+  has_many :match_predictions, through: :matches
+
+  has_many :competition_game_weeks
+  has_many :competitions, through: :competition_game_weeks
 
   validates :start_date, :end_date, :week_number, presence: true
   validates :start_date, comparison: { less_than: :end_date }

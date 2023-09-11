@@ -1,0 +1,5 @@
+<p>hello from competitions index</p>
+
+<% @competitions.each do |competition| %>
+  <p><%= link_to competition.name, competition%></p>
+<% end %>
