@@ -1,8 +1,0 @@
-<p>hello world from submit_game_week_predictions</p>
-
-<%= form_with model: @user do |form|%>
-  <%= form.fields_for :match_predictions do |mp_field| %>
-    <%= mp_field.number_field :home_score_guess %>
-  <% end %>
-  <%= form.submit %>
-<% end %>

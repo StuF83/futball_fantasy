@@ -67,6 +67,10 @@ class MatchPredictionsController < ApplicationController
     bot.run
   end
 
+  def current_predictions
+
+  end
+
   private
 
   def match_prediction_params
