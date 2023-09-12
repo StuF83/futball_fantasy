@@ -14,4 +14,6 @@ class MatchPrediction < ApplicationRecord
         self.result = 'incorrect'
       end
     end
+  end
+
 end

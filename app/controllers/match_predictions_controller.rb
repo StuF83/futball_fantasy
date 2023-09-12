@@ -16,6 +16,7 @@ class MatchPredictionsController < ApplicationController
   end
 
   def create
+    raise
     @predictions = []
     params["predictions"].each do |prediction|
       @match_prediction = MatchPrediction.new(home_score_guess: prediction["home_score_guess"],
