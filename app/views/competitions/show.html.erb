@@ -1,13 +1,18 @@
 <p>hello from competitions show</p>
 
+<p><%= link_to 'Your Competitions Home Page', competitions_path%></p>
+
+<% @users.each do |user| %>
+  <p><%= user.email %></p>
+<% end %>
+
 <% @game_weeks.each do |game_week| %>
   <p>Game Week <%= game_week.week_number %></p>
   <% game_week.match_predictions.each do |match_prediction| %>
     <ul>
       <li><%= match_prediction.user.email %></li>
-      <li><%= match_prediction.match_id %></li>
       <li><%= match_prediction.home_score_guess %></li>
-      <li><%= match_prediction.match.id %></li>
+      <li><%= match_prediction.match.home_score %></li>
       <li><%= match_prediction.match.home_team %></li>
     </ul>
   <% end %>
