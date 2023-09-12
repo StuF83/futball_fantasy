@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_10_183046) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_12_131132) do
   create_table "competition_game_weeks", force: :cascade do |t|
     t.integer "competition_id", null: false
     t.integer "game_week_id", null: false
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_183046) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "match_id", null: false
+    t.string "result", default: "pending"
     t.index ["match_id"], name: "index_match_predictions_on_match_id"
     t.index ["user_id"], name: "index_match_predictions_on_user_id"
   end
@@ -63,6 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_183046) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "game_week_id"
+    t.index ["game_week_id"], name: "index_matches_on_game_week_id"
   end
 
   create_table "user_competitions", force: :cascade do |t|
@@ -92,6 +95,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_10_183046) do
   add_foreign_key "game_week_matches", "matches"
   add_foreign_key "match_predictions", "matches"
   add_foreign_key "match_predictions", "users"
+  add_foreign_key "matches", "game_weeks"
   add_foreign_key "user_competitions", "competitions"
   add_foreign_key "user_competitions", "users"
 end
