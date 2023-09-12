@@ -68,7 +68,7 @@ class MatchPredictionsController < ApplicationController
   end
 
   def current_predictions
-
+    @current_predictions = MatchPrediction.where(user: current_user, result: "pending")
   end
 
   private
