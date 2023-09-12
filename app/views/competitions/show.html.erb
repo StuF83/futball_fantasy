@@ -1,14 +1,14 @@
 <p>hello from competitions show</p>
 
-<% @competition.game_weeks.each do |game_week| %>
+<% @game_weeks.each do |game_week| %>
   <p>Game Week <%= game_week.week_number %></p>
-  <ul>
-    <% game_week.matches.each do |match| %>
-      <li><%= match.home_team %></li>
-      <li><%= match.away_team %></li>
-      <li><%= match.home_score %></li>
-      <li><%= match.away_score %></li>
-      <br>
-    <% end %>
-  </ul>
+  <% game_week.match_predictions.each do |match_prediction| %>
+    <ul>
+      <li><%= match_prediction.user.email %></li>
+      <li><%= match_prediction.match_id %></li>
+      <li><%= match_prediction.home_score_guess %></li>
+      <li><%= match_prediction.match.id %></li>
+      <li><%= match_prediction.match.home_team %></li>
+    </ul>
+  <% end %>
 <% end %>
