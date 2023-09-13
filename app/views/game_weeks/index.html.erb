@@ -1,8 +1,11 @@
 <h1>Game_weeks index page</h1>
+<div>
+  <%= link_to("Add a new game_week", new_game_week_path) %>
+</div>
 
 <% @game_weeks.each do |game_week| %>
-  <%= link_to game_week.week_number, game_week_path(game_week) %>
-  <p><%= game_week.start_date %></p>
-  <p><%= game_week.end_date %></p>
+  <%= link_to"Game Week #{game_week.week_number}", game_week_path(game_week) %>
+  <p>Start Date<%= game_week.start_date %></p>
+  <p>End Date<%= game_week.end_date %></p>
   <br>
 <% end %>

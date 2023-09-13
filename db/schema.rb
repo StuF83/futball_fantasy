@@ -64,8 +64,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_131132) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "game_week_id"
-    t.index ["game_week_id"], name: "index_matches_on_game_week_id"
   end
 
   create_table "user_competitions", force: :cascade do |t|
@@ -95,7 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_12_131132) do
   add_foreign_key "game_week_matches", "matches"
   add_foreign_key "match_predictions", "matches"
   add_foreign_key "match_predictions", "users"
-  add_foreign_key "matches", "game_weeks"
   add_foreign_key "user_competitions", "competitions"
   add_foreign_key "user_competitions", "users"
 end

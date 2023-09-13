@@ -67,6 +67,10 @@ class MatchPredictionsController < ApplicationController
     bot.run
   end
 
+  def current_predictions
+    @current_predictions = MatchPrediction.where(user: current_user, result: "pending")
+  end
+
   private
 
   def match_prediction_params

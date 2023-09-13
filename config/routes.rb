@@ -14,5 +14,9 @@ Rails.application.routes.draw do
     resources :match_predictions, only: [:index, :new, :create]
   end
 
-  resources :match_predictions, only: [:edit, :update]
+  resources :match_predictions, only: [:edit, :update] do
+    collection do
+      get 'current_predictions'
+    end
+  end
 end
