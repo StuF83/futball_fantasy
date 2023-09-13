@@ -12,10 +12,25 @@
   </head>
 
   <body>
+    <nav class="bg-indigo-700 shadow-lg">
+      <div class="container mx-auto">
+        <div class="sm:flex justify-around">
+          <%= link_to("HOME", root_path, class: "text-white text-3xl font-bold p-3") %>
+
+          <ul class="text-grey-400 sm:self-center text-xl border-t sm:border-none">
+            <li class="sm:inline-block">
+              <%= link_to("GameWeeks", game_weeks_path, class: "p-3 hover:text-white") %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="devise-alerts">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
     </div>
-    <%= yield %>
+    <div class="prose mx-auto">
+      <%= yield %>
+    </div>
   </body>
 </html>
