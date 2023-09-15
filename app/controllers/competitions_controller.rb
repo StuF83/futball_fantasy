@@ -6,12 +6,18 @@ class CompetitionsController < ApplicationController
 
   def show
     @competition = Competition.find(params[:id])
-    @game_weeks = @competition.game_weeks
-    @users = []
-    @competition.users.each {|user| @users << user.email}
-    @users.sort!
-    # when getting all the predictions for the competition, check which one's have a result of pending.
-    # if any of the resutls are pending, trigger a method to update those pending results.
+    # @users = []
+    # @competition.users.each {|user| @users << user.email}
+    # @users.sort!
+    @users = @competition.users
+
+    # we want our row to be a join of the match row, with the match prediction row. Then we want to select only the rows that belong to the competition. And we want to group them by game_week.
+
+    # @match_and_predictions = Match.joins("SELECT home_team, away_team, home_score, away_score, home_score_guess, away_score_guess, user_id FROM matches JOIN match_predictions ON matches.id = match_predictions.match_id;")
+
+    @match_and_predictions = Match.joins(:match_predictions)
+
+
 
 
   end
