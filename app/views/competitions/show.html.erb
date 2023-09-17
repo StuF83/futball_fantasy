@@ -11,19 +11,20 @@
   <% end %>
 </table>
 
-<table>
-  <% @competition_matches.each do |match| %>
-    <% match.match_prediction.each do |match_prediction| %>
+<% @competition_game_weeks.each do |game_week| %>
+  <p>Game Week<%= game_week.week_number %></p>
+  <table>
+    <% game_week.matches.each do |match| %>
     <tr>
       <td><%= match.home_team %></td>
       <td><%= match.away_team %></td>
       <td><%= match.home_score %></td>
       <td><%= match.away_score %></td>
-      <td><%= match_prediction.home_score_guess %></td>
-      <td><%= match_prediction.away_score_guess %></td>
+      <% match.match_predictions.each do |match_prediction| %>
+        <td><%= match_prediction.home_score_guess %></td>
+        <td><%= match_prediction.away_score_guess %></td>
+      <% end %>
     </tr>
-
     <% end %>
-  <% end %>
-
-</table>
+  </table>
+<% end %>
