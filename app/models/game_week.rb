@@ -6,6 +6,8 @@ class GameWeek < ApplicationRecord
   has_many :competition_game_weeks
   has_many :competitions, through: :competition_game_weeks
 
+  has_many :users, through: :competitions
+
   validates :start_date, :end_date, :week_number, presence: true
   validates :start_date, comparison: { less_than: :end_date }
   validate :cannot_overlap_another_game_week
