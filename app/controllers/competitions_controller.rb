@@ -6,13 +6,10 @@ class CompetitionsController < ApplicationController
 
   def show
     @competition = Competition.find(params[:id])
-    @user_game_weeks = @competition.game_weeks
-    @game_weeks = @competition.game_weeks
     @users = @competition.users
 
-    # when getting all the predictions for the competition, check which one's have a result of pending.
-    # if any of the resutls are pending, trigger a method to update those pending results.
+    @competition_matches = Match.joins(:match_predictions => [:user => [:competitions => :game_weeks]]).where(:competitions => {:id => params[:id]})
 
-
+    @competition_game_weeks = GameWeek.joins(:matches => [:match_predictions => [:user => :competitions]]).where(:competitions => {:id => params[:id]}).distinct
   end
 end
