@@ -12,15 +12,18 @@
 </table>
 
 <table>
-  <% @match_and_predictions.each do |match| %>
+  <% @competition_matches.each do |match| %>
+    <% match.match_prediction.each do |match_prediction| %>
     <tr>
       <td><%= match.home_team %></td>
       <td><%= match.away_team %></td>
       <td><%= match.home_score %></td>
       <td><%= match.away_score %></td>
-      <td><%= match.match_predictions[0].home_score_guess %></td>
-      <td><%= match.match_predictions[0].away_score_guess %></td>
+      <td><%= match_prediction.home_score_guess %></td>
+      <td><%= match_prediction.away_score_guess %></td>
     </tr>
+
+    <% end %>
   <% end %>
 
 </table>
