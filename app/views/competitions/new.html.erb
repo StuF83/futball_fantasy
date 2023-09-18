@@ -1,0 +1,7 @@
+<h1>hello from competitions new page</h1>
+
+<%= form_with model: @competition do |field| %>
+  <%= field.label :name %>
+  <%= field.text_field :name %>
+  <%= field.submit %>
+<% end %>

@@ -8,9 +8,12 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :competitions, only: [:index, :show]
+  resources :competitions, only: [:index, :show, :new, :create] do
+    resources :game_weeks, only: [:new, :create, :index]
+  end
 
-  resources :game_weeks do
+
+  resources :game_weeks, only: [:show, :destroy] do
     resources :match_predictions, only: [:index, :new, :create]
   end
 

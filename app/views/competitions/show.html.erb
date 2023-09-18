@@ -1,20 +1,24 @@
 <p>hello from competitions show</p>
 
-<p><%= link_to 'Your Competitions Home Page', competitions_path%></p>
+<p><%= link_to 'Competitions Home Page', competitions_path%></p>
 
-<table>
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.email %></td>
-      <td><%= user.id %></td>
-    </tr>
-  <% end %>
-</table>
+<p><%= link_to 'Add Game Week', new_competition_game_week_path(@competition) %></p>
 
 <% @competition_game_weeks.each do |game_week| %>
   <p>Game Week<%= game_week.week_number %></p>
   <table>
-    <% game_week.matches.each do |match| %>
+    <% game_week.matches.each_with_index do |match, i| %>
+    <tr>
+      <% if i == 0 %>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <% game_week.users.each do |user| %>
+          <td colspan="2"><%= user.email %></td>
+        <% end %>
+      </tr>
+    <% end %>
     <tr>
       <td><%= match.home_team %></td>
       <td><%= match.away_team %></td>

@@ -4,12 +4,32 @@ class CompetitionsController < ApplicationController
     @competitions = user.competitions
   end
 
+  def new
+    @competition = Competition.new
+  end
+
+  def create
+    @competition = Competition.new(competition_params)
+
+    ## not for production
+    @competition.users << current_user
+    ##
+
+    @competition.save
+    redirect_to competition_path(@competition)
+
+
+  end
+
   def show
     @competition = Competition.find(params[:id])
-    @users = @competition.users
-
-    @competition_matches = Match.joins(:match_predictions => [:user => [:competitions => :game_weeks]]).where(:competitions => {:id => params[:id]})
-
     @competition_game_weeks = GameWeek.joins(:matches => [:match_predictions => [:user => :competitions]]).where(:competitions => {:id => params[:id]}).distinct
+  end
+
+  private
+
+  def competition_params
+    params.require(:competition).permit(:name)
+
   end
 end
