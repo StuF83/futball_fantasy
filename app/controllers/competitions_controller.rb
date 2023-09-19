@@ -22,6 +22,7 @@ class CompetitionsController < ApplicationController
   def show
     @competition = Competition.find(params[:id])
     @competition_game_weeks = GameWeek.joins(:matches => [:match_predictions => [:user => :competitions]]).where(:competitions => {:id => params[:id]}).distinct
+    @match_predictions = @competition_game_weeks.
   end
 
   def add_players
