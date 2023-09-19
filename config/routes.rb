@@ -8,8 +8,8 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :competitions, only: [:index, :show, :new, :create] do
-    get 'add_players', to: 'competitions#add_players'
+  resources :competitions, only: [:index, :show, :new, :create, :update, :edit] do
+    # get 'add_players', to: 'competitions#add_players'
     resources :game_weeks, only: [:new, :create, :index]
   end
 
