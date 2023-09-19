@@ -30,5 +30,11 @@
       <% end %>
     </tr>
     <% end %>
+    <tr>
+    <td colspan="4"></td>
+      <% game_week.users.each do |user| %>
+        <td colspan="2"><%= game_week.weekly_score(user) %></td>
+      <% end %>
+    </tr>
   </table>
 <% end %>

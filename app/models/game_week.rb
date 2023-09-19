@@ -26,4 +26,14 @@ class GameWeek < ApplicationRecord
     end
     overlap_error unless overlaps.empty?
   end
+
+  def weekly_score(player)
+    score = 0
+    self.match_predictions.where(user: player).each do |match_prediction|
+      unless match_prediction.result == 'pending'
+        score += match_prediction.result.to_i
+      end
+    end
+    score
+  end
 end

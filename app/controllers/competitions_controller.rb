@@ -17,13 +17,15 @@ class CompetitionsController < ApplicationController
 
     @competition.save
     redirect_to competition_path(@competition)
-
-
   end
 
   def show
     @competition = Competition.find(params[:id])
     @competition_game_weeks = GameWeek.joins(:matches => [:match_predictions => [:user => :competitions]]).where(:competitions => {:id => params[:id]}).distinct
+  end
+
+  def add_players
+    @competition = Competition.find(params[:competition_id])
   end
 
   private
