@@ -24,8 +24,8 @@
       <td><%= match.home_score %></td>
       <td><%= match.away_score %></td>
       <% match.match_predictions.each do |match_prediction| %>
-        <td><%= match_prediction.home_score_guess %></td>
-        <td><%= match_prediction.away_score_guess %></td>
+        <td><%= match_prediction.home_score_guess ? match_prediction.home_score_guess : "-" %></td>
+        <td><%= match_prediction.away_score_guess ? match_prediction.home_score_guess : "-" %></td>
       <% end %>
     </tr>
     <% end %>
