@@ -19,9 +19,6 @@
 
           <ul class="text-grey-400 sm:self-center text-xl border-t sm:border-none">
             <li class="sm:inline-block">
-              <%= link_to("GameWeeks", game_weeks_path, class: "p-3 hover:text-white") %>
-            </li>
-            <li class="sm:inline-block">
               <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "p-3 hover:text-white" %>
             </li>
           </ul>

@@ -6,12 +6,12 @@
   <% end %>
 <% end %>
 
-<%= form_with model: @game_week do |f| %>
-  <%= f.label :start_date %>
-  <%= f.date_field :start_date%>
-  <%= f.label :end_date %>
-  <%= f.date_field :end_date%>
-  <%= f.label :week_number %>
-  <%= f.number_field :week_number%>
-  <%= f.submit %>
+<%= form_with model: [ @competition, @competition.game_weeks.build ] do |gw| %>
+  <%= gw.label :start_date %>
+  <%= gw.date_field :start_date%>
+  <%= gw.label :end_date %>
+  <%= gw.date_field :end_date%>
+  <%= gw.label :week_number %>
+  <%= gw.number_field :week_number%>
+  <%= gw.submit %>
 <% end %>

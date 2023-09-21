@@ -8,10 +8,12 @@ class GameWeeksController < ApplicationController
   end
 
   def new
+    @competition = Competition.find(params[:competition_id])
     @game_week = GameWeek.new
   end
 
   def create
+    @competition = Competition.find(params[:competition_id])
     @game_week = GameWeek.new(game_week_params)
     if @game_week.save
       season = '2023'
@@ -26,7 +28,9 @@ class GameWeeksController < ApplicationController
         @match.save
         @game_week.matches << @match
       end
-      redirect_to game_week_path(@game_week) and return
+      @competition.game_weeks << @game_week
+      @competition.save
+      redirect_to competition_game_weeks_path(@game_week) and return
     else
       render :new, status: 422
     end
