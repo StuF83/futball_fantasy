@@ -2,7 +2,7 @@ class MatchPredictionsController < ApplicationController
   def index
     @user = current_user
     @game_week = GameWeek.find(params[:game_week_id])
-    @match_predictions = GameWeek.find(params[:game_week_id]).match_predictions
+    @match_predictions = GameWeek.find(params[:game_week_id]).match_predictions.where(user: current_user)
   end
 
   def new

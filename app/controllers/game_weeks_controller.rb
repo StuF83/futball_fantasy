@@ -26,14 +26,15 @@ class GameWeeksController < ApplicationController
       data['matches'].each do |match|
         @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"]  )
         @match.save
-        # @competition.users.each do |user|
-        #   match_prediction = @match.match_predictions.build
-        #   match_prediction.user = user
-        #   match_prediction.save
-        #   raise
-        # end
+
+        @competition.users.each do |user|
+          match_prediction = @match.match_predictions.build
+          match_prediction.user = user
+          match_prediction.save
+        end
         @game_week.matches << @match
       end
+
       @competition.game_weeks << @game_week
       @competition.save
       redirect_to competition_game_weeks_path(@game_week) and return

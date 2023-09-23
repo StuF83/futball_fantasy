@@ -21,8 +21,9 @@ class CompetitionsController < ApplicationController
 
   def show
     @competition = Competition.find(params[:id])
-    # @users = @competition.users
-    # @competition_game_weeks = GameWeek.includes(:matches => [:match_predictions => [:user => :competitions]]).where([:competition_game_weeks => :competitions] => {:id => params[:id]})
+    @users = @competition.users.order(:email)
+    # a row is : match = [home_team, away_team, home_score, away_score] << user.match_prediction.home_guess and away guess
+
     @competition_game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]})
     @competition_game_weeks.each do |game_week|
       game_week.match_predictions.each do |match_prediction|
