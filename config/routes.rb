@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :match_predictions, only: [:edit, :update] do
     collection do
       get 'current_predictions'
+      patch 'current_predictions_update'
     end
   end
 end
