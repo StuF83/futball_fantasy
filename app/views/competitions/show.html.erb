@@ -6,6 +6,8 @@
 
 <p><%= link_to 'Add Player', edit_competition_path(@competition) %></p>
 
+<p><%= link_to 'View your current predictions', match_predictions_current_predictions_path %></p>
+
 <% @competition_game_weeks.each do |game_week| %>
 <p><%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%></p>
   <table>

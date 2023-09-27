@@ -77,19 +77,13 @@ class MatchPredictionsController < ApplicationController
   end
 
   def current_predictions_update
-    params["predictions"].each do |prediction|
-      match_prediction = MatchPrediction.find(prediction[0])
-      match_prediction.home_score_guess = prediction[1]["home_score_guess"]
-      match_prediction.away_score_guess = prediction[1]["away_score_guess"]
-      match_prediction.save
-    end
+    @user = current_user
+    @user.update(match_prediction_params)
   end
 
   private
 
   def match_prediction_params
-    params.require(:match_prediction).permit(:home_score_guess, :away_score_guess, :user_id, :match_id)
-
-    # params.permit(predictions: [:match_predicton_id, :home_score_guess, :away_score_guess]).to_h
+    params.require(:user).permit(match_predictions_attributes: [:home_score_guess, :away_score_guess, :id])
   end
 end

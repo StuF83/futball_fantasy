@@ -4,23 +4,19 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'competitions#index'
 
+  devise_for :users
+
   get 'matches/index', to: 'matches#index'
 
-  devise_for :users
+  get '/match_predictions/current_predictions/', to: 'match_predictions#current_predictions'
+  patch '/match_predictions/current_predictions_update/', to: 'match_predictions#current_predictions_update'
 
   resources :competitions, only: [:index, :show, :new, :create, :update, :edit] do
     resources :game_weeks, only: [:new, :create, :index]
   end
 
-
-  resources :game_weeks, only: [:show, :destroy] do
-    resources :match_predictions, only: [:index, :new, :create]
-  end
-
-  resources :match_predictions, only: [:edit, :update] do
-    collection do
-      get 'current_predictions'
-      patch 'current_predictions_update'
-    end
-  end
+  resources :game_weeks, only: [:show, :destroy]
+  # do
+  #   resources :match_predictions, only: [:index, :new, :create]
+  # end
 end
