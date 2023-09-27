@@ -30,6 +30,7 @@ class GameWeeksController < ApplicationController
         @competition.users.each do |user|
           match_prediction = @match.match_predictions.build
           match_prediction.user = user
+          match_prediction.cut_off_date = match_prediction.match.scheduled_date - 1
           match_prediction.save
         end
         @game_week.matches << @match
