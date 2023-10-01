@@ -8,29 +8,33 @@
 
 <p><%= link_to 'View your current predictions', match_predictions_current_predictions_path %></p>
 
+
+
 <% @competition_game_weeks.each do |game_week| %>
-<p><%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%></p>
+  <p><%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%></p>
   <table>
     <% game_week.matches.each_with_index do |match, i| %>
     <tr>
       <% if i == 0 %>
         <td colspan="4"></td>
-        <% game_week.users.each do |user| %>
+        <% @users.each do |user| %>
           <td colspan="2"><%= user.email %></td>
         <% end %>
       </tr>
     <% end %>
+
     <tr>
       <td><%= match.home_team %></td>
       <td><%= match.away_team %></td>
       <td><%= match.home_score %></td>
       <td><%= match.away_score %></td>
-      <% match.match_predictions.each do |match_prediction| %>
+      <% match.match_predictions.order(:user_id).each do |match_prediction| %>
         <td><%= match_prediction.home_score_guess ? match_prediction.home_score_guess : "-" %></td>
         <td><%= match_prediction.away_score_guess ? match_prediction.away_score_guess : "-" %></td>
       <% end %>
     </tr>
     <% end %>
+
     <tr>
     <td colspan="4"></td>
       <% game_week.users.each do |user| %>
