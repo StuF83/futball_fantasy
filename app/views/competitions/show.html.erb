@@ -17,7 +17,7 @@
     <tr>
       <% if i == 0 %>
         <td colspan="4"></td>
-        <% @users.each do |user| %>
+        <% game_week.users.order(:id).each do |user| %>
           <td colspan="2" class="text-center"><%= user.email %></td>
         <% end %>
       </tr>
@@ -42,7 +42,7 @@
     <tr>
     <td colspan="2"></td>
     <td colspan="2">Total</td>
-      <% game_week.users.each do |user| %>
+      <% game_week.users.order(:id).each do |user| %>
         <td colspan="2" class="text-center text-red-600"><%= game_week.weekly_score(user) %></td>
       <% end %>
     </tr>
