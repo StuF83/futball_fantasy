@@ -11,11 +11,33 @@ class CompetitionsController < ApplicationController
   def create
     @competition = Competition.new(competition_params)
 
-    ## not for production
-    @competition.users << current_user
-    ##
+    season = '2023'
+    football_data_api = Rails.application.credentials.football_data_api
+    api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}",
+      "X-Auth-Token" => football_data_api
+    ).read
 
-    @competition.save
+    season_data = JSON.parse(api_data)
+    match_days = []
+    season_data["matches"].each do |match|
+      match_days << match["matchday"]
+    end
+
+    match_days.max.times do |i|
+      @competition.game_weeks << GameWeek.create(week_number: i+1)
+      @competition.save
+    end
+
+    season_data["matches"].each do |match|
+      @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["score"]["winner"], match_day: match["matchday"])
+      @match.save
+    end
+
+    @competition.game_weeks.each do |game_week|
+      @matches = Match.where(match_day: game_week.week_number)
+      game_week.matches << @matches
+    end
+
     redirect_to competition_path(@competition)
   end
 
@@ -32,7 +54,6 @@ class CompetitionsController < ApplicationController
         end
       end
     end
-    # raise
   end
 
   def edit
@@ -43,10 +64,18 @@ class CompetitionsController < ApplicationController
   def update
     @competition = Competition.find(params[:id])
     competition_user_params[:user_ids].each do |id|
-      user = User.find(id)
-      @competition.users << user
-      @competition.save
+      @user = User.find(id)
+      @competition.users << @user
+      @competition.game_weeks.each do |game_week|
+        game_week.matches.each do |match|
+          match_prediction = match.match_predictions.build
+          match_prediction.user = @user
+          match_prediction.cut_off_date = match.scheduled_date - 1
+          match_prediction.save
+        end
+      end
     end
+    @competition.save
     redirect_to competition_path(@competition)
   end
 
