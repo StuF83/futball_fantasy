@@ -18,21 +18,21 @@
       <% if i == 0 %>
         <td colspan="4"></td>
         <% @users.each do |user| %>
-          <td colspan="2"><%= user.email %></td>
+          <td colspan="2" class="text-center"><%= user.email %></td>
         <% end %>
       </tr>
     <% end %>
 
     <tr>
-      <td><%= match.home_team %></td>
-      <td><%= match.away_team %></td>
-      <td><%= match.home_score %></td>
-      <td><%= match.away_score %></td>
+      <td class="text-center bg-<%= match.home_team %>-50 <%= "text-" + "#{match.home_team}" + "text-50"%>"><%= match.home_team %></td>
+      <td class="text-center bg-<%= match.away_team %>-50 <%= "text-" + "#{match.away_team}" + "text-50"%>"><%= match.away_team %></td>
+      <td class="text-center"><%= match.home_score %></td>
+      <td class="text-center"><%= match.away_score %></td>
       <% match.match_predictions.order(:user_id).each do |match_prediction| %>
-        <td class="<%= 'bg-green-600' if match_prediction.result == "1" %><%= 'bg-yellow-400' if match_prediction.result == "3" %>">
+        <td class="text-center <%= 'bg-green-600' if match_prediction.result == "1" %><%= 'bg-yellow-400' if match_prediction.result == "3" %>">
         <%= match_prediction.home_score_guess ? match_prediction.home_score_guess : "-" %>
         </td>
-        <td class="<%= 'bg-green-600' if match_prediction.result == "1" %><%= 'bg-yellow-400' if match_prediction.result == "3" %>">
+        <td class="text-center <%= 'bg-green-600' if match_prediction.result == "1" %><%= 'bg-yellow-400' if match_prediction.result == "3" %>">
         <%= match_prediction.away_score_guess ? match_prediction.away_score_guess : "-" %>
         </td>
       <% end %>
@@ -40,9 +40,10 @@
     <% end %>
 
     <tr>
-    <td colspan="4"></td>
+    <td colspan="2"></td>
+    <td colspan="2">Total</td>
       <% game_week.users.each do |user| %>
-        <td colspan="2"><%= game_week.weekly_score(user) %></td>
+        <td colspan="2" class="text-center text-red-600"><%= game_week.weekly_score(user) %></td>
       <% end %>
     </tr>
   </table>
