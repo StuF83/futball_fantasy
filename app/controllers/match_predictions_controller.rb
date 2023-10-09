@@ -72,7 +72,7 @@ class MatchPredictionsController < ApplicationController
   end
 
   def current_predictions
-    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today - 1.day)..(Date.today + 7.day) )
+    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 14.day) )
     @user = current_user
   end
 

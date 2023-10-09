@@ -2,12 +2,12 @@
 
 <p>These are all your active predictions, you can still update your predictions until 24 hours before the match is scheduled to play</p>
 
-<%= form_with model: @user, url: match_predictions_current_predictions_update_path do |form| %>
+<%= form_with model: @user, url: match_predictions_current_predictions_update_path, class: "grid grid-cols-3 justify-items-center" do |form| %>
       <%= form.fields_for :match_predictions, @current_predictions do |pf| %>
-        <% match = Match.find(pf.object[:match_id]) %>
-        <%= "#{match.home_team} VS #{match.away_team}" %>
-        <%= pf.number_field :home_score_guess %>
-        <%= pf.number_field :away_score_guess %>
+          <% match = Match.find(pf.object[:match_id]) %>
+          <%= pf.number_field :home_score_guess, class: "class" %>
+          <p class="class"> <%= "#{match.home_team} VS #{match.away_team}" %> </p>
+          <%= pf.number_field :away_score_guess, class: "class" %>
       <% end %>
   <%= form.submit %>
 <% end %>
