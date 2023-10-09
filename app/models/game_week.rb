@@ -8,9 +8,10 @@ class GameWeek < ApplicationRecord
 
   has_many :users, through: :competitions
 
-  validates :start_date, :end_date, :week_number, presence: true
-  validates :start_date, comparison: { less_than: :end_date }
-  validate :cannot_overlap_another_game_week
+  validates :week_number, presence: true
+  # :start_date, :end_date,
+  # validates :start_date, comparison: { less_than: :end_date }
+  # validate :cannot_overlap_another_game_week
 
   def overlap_error
     errors.add(:overlap_error, 'Game Week dates clash with an existing Game Week')
