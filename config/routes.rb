@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     resources :game_weeks, only: [:new, :create, :index]
   end
 
-  resources :game_weeks, only: [:show, :destroy]
+  resources :game_weeks, only: [:show, :destroy, :update]
   # do
   #   resources :match_predictions, only: [:index, :new, :create]
   # end
