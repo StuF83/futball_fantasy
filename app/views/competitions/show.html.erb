@@ -7,19 +7,26 @@
 
 <p><%= link_to 'Add Player', edit_competition_path(@competition) %></p>
 
-<p><%= link_to 'View your current predictions', match_predictions_current_predictions_path %></p>
+<><%= link_to 'View your current predictions', match_predictions_current_predictions_path %></p>
 </section>
 
 
 <section>
   <% @competition_game_weeks.each do |game_week| %>
-    <p><%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%></p>
+    <div class="inline">
+      <%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%>
+      <% if game_week.matches.any? { |match| match.status == nil } %>
+        <%= link_to "- Update", game_week_path(game_week), data: {turbo_method: :patch} %>
+      <% else %>
+        <p class="text-slate-500 inline">- All Matches Up To Date</p>
+      <% end %>
+    </div>
     <div class="overflow-auto mb-8">
       <table class="table-auto border-collapse overflow-scroll w-full">
         <% game_week.matches.each_with_index do |match, i| %>
         <tr>
           <% if i == 0 %>
-            <td colspan="5"></td>
+            <td colspan="6"></td>
             <% game_week.users.order(:id).each do |user| %>
               <td colspan="2" class="px-4 text-center"><%= user.email %></td>
             <% end %>
@@ -27,6 +34,7 @@
         <% end %>
 
         <tr class=" border-none">
+          <td></td>
           <td class="px-4 border border-solid border-black text-center bg-<%= match.home_team %>-50 <%= "text-" + "#{match.home_team}" + "text-50"%>"><%= match.home_team %></td>
           <td class="px-4 bg-cyan-50 text-center">vs</td>
           <td class="px-4 border border-solid border-black text-center bg-<%= match.away_team %>-50 <%= "text-" + "#{match.away_team}" + "text-50"%>"><%= match.away_team %></td>
@@ -44,7 +52,7 @@
         <% end %>
 
         <tr >
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td colspan="2" class="text-center pb-4">Total</td>
           <% game_week.users.order(:id).each do |user| %>
             <td colspan="2" class="text-center text-red-600 pb-4"><%= game_week.weekly_score(user) %></td>
