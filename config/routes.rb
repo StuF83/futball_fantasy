@@ -12,11 +12,9 @@ Rails.application.routes.draw do
   patch '/match_predictions/current_predictions_update/', to: 'match_predictions#current_predictions_update'
 
   resources :competitions, only: [:index, :show, :new, :create, :update, :edit] do
+    get 'leaderboard', on: :member
     resources :game_weeks, only: [:new, :create, :index]
   end
 
   resources :game_weeks, only: [:show, :destroy, :update]
-  # do
-  #   resources :match_predictions, only: [:index, :new, :create]
-  # end
 end

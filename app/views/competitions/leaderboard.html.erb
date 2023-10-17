@@ -1,0 +1,16 @@
+<h1>Hello from competition leader board</h1>
+
+<table>
+  <% @competition_user_predictions[0].users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <% score = 0 %>
+      <% user.match_predictions.each do |prediction| %>
+          <% unless prediction.result == "pending" %>
+          <% score += prediction.result.to_i %>
+          <% end %>
+      <% end %>
+      <td><%= score %></td>
+    </tr>
+  <% end %>
+</table>

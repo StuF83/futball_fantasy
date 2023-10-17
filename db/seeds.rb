@@ -18,3 +18,18 @@ user.save
 
 user = User.new(email: 'libby@test.com', password: '123456')
 user.save
+
+user = User.new(email: 'dunc@test.com', password: '123456')
+user.save
+
+user = User.new(email: 'pete@test.com', password: '123456')
+user.save
+
+user = User.new(email: 'chris@test.com', password: '123456')
+user.save
+
+user = User.new(email: 'marc@test.com', password: '123456')
+user.save
+
+user = User.new(email: 'spence@test.com', password: '123456')
+user.save
