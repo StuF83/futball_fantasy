@@ -7,7 +7,7 @@
 
 <p><%= link_to 'Add Player', edit_competition_path(@competition) %></p>
 
-<><%= link_to 'View your current predictions', match_predictions_current_predictions_path %></p>
+<%= link_to 'View your current predictions', match_predictions_current_predictions_path %>
 </section>
 
 
@@ -27,7 +27,7 @@
         <tr>
           <% if i == 0 %>
             <td colspan="6"></td>
-            <% game_week.users.order(:id).each do |user| %>
+            <% game_week.users.order(id: :asc).each do |user| %>
               <td colspan="2" class="px-4 text-center"><%= user.email %></td>
             <% end %>
           </tr>
@@ -40,7 +40,7 @@
           <td class="px-4 border border-solid border-black text-center bg-<%= match.away_team %>-50 <%= "text-" + "#{match.away_team}" + "text-50"%>"><%= match.away_team %></td>
           <td class="px-4 bg-sky-100 text-center"><%= match.home_score %></td>
           <td class="px-4 bg-sky-100 text-center"><%= match.away_score %></td>
-          <% match.match_predictions.order(:user_id).each do |match_prediction| %>
+          <% match.match_predictions.order(user_id: :asc).each do |match_prediction| %>
             <td class="px-4 border-l text-center <%= 'bg-green-600' if match_prediction.result == "1" %><%= 'bg-yellow-400' if match_prediction.result == "3" %>">
             <%= match_prediction.home_score_guess ? match_prediction.home_score_guess : "-" %>
             </td>
@@ -54,7 +54,7 @@
         <tr >
         <td colspan="4"></td>
         <td colspan="2" class="text-center pb-4">Total</td>
-          <% game_week.users.order(:id).each do |user| %>
+          <% game_week.users.order(id: :asc).each do |user| %>
             <td colspan="2" class="text-center text-red-600 pb-4"><%= game_week.weekly_score(user) %></td>
           <% end %>
         </tr>

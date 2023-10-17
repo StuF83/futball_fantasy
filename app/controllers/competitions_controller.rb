@@ -52,6 +52,10 @@ class CompetitionsController < ApplicationController
         end
       end
     end
+    users = @competition.users.arel_table
+    this_user = users[:id].eq(current_user.id)
+    @current_user_first = Arel::Nodes::Case.new.when(this_user).then(1).else(2)
+
   end
 
   def edit
@@ -75,6 +79,12 @@ class CompetitionsController < ApplicationController
     end
     @competition.save
     redirect_to competition_path(@competition)
+  end
+
+  def leaderboard
+    @competition = Competition.find(params[:id])
+    @players = @competition.users
+    @competition_user_predictions = Competition.includes(users: :match_predictions).where(:competitions => {:id => params[:id]})
   end
 
   private
