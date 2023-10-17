@@ -1,0 +1,6 @@
+<% @predictions.each do |prediction| %>
+  <p><%= prediction.result %></p>
+  <p><%= prediction.cut_off_date %></p>
+  <p><%= prediction.user_id %></p>
+  <br>
+<% end %>

@@ -72,13 +72,23 @@ class MatchPredictionsController < ApplicationController
   end
 
   def current_predictions
-    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 14.day) )
+    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 7.day) )
     @user = current_user
   end
 
   def current_predictions_update
     @user = current_user
     @user.update(match_prediction_params)
+  end
+
+  # not for production
+  def generate_predictions
+    @predictions = MatchPrediction.all.where(result: "pending", cut_off_date: ( Time.now.midnight - 90.day)..Time.now.midnight)
+    @predictions.each do |prediction|
+      prediction.home_score_guess = rand(0..4)
+      prediction.away_score_guess = rand(0..4)
+      prediction.update_result
+    end
   end
 
   private
