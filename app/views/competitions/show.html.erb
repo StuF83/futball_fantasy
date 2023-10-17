@@ -1,9 +1,9 @@
 <section class="p-6 my-12">
-<p>hello from competitions show</p>
+<h1>hello from competitions show</h1>
 
 <p><%= link_to 'Competitions Home Page', competitions_path%></p>
 
-<p><%#= link_to 'Add Game Week', new_competition_game_week_path(@competition) %></p>
+<p><%= link_to 'Leaderboard', leaderboard_competition_path(@competition) %></p>
 
 <p><%= link_to 'Add Player', edit_competition_path(@competition) %></p>
 

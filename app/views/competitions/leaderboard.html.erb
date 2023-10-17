@@ -1,7 +1,7 @@
 <h1>Hello from competition leader board</h1>
 
-<table>
-  <% @competition_user_predictions[0].users.each do |user| %>
+<table class="table-auto border-collapse">
+  <% @competition_user_predictions.first.users.each do |user| %>
     <tr>
       <td><%= user.email %></td>
       <% score = 0 %>

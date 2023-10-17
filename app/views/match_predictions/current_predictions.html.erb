@@ -9,5 +9,5 @@
           <p class="class"> <%= "#{match.home_team} VS #{match.away_team}" %> </p>
           <%= pf.number_field :away_score_guess, class: "class" %>
       <% end %>
-  <%= form.submit %>
+  <%= form.submit "Save Predictions"%>
 <% end %>
