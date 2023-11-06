@@ -52,10 +52,9 @@ class CompetitionsController < ApplicationController
         end
       end
     end
-    users = @competition.users.arel_table
-    this_user = users[:id].eq(current_user.id)
-    @current_user_first = Arel::Nodes::Case.new.when(this_user).then(1).else(2)
-
+    # users = @competition.users.arel_table
+    # this_user = users[:id].eq(current_user.id)
+    # @current_user_first = Arel::Nodes::Case.new.when(this_user).then(1).else(2)
   end
 
   def edit
@@ -85,6 +84,11 @@ class CompetitionsController < ApplicationController
     @competition = Competition.find(params[:id])
     @players = @competition.users
     @competition_user_predictions = Competition.includes(users: :match_predictions).where(:competitions => {:id => params[:id]})
+  end
+
+  def current_match_day
+    @competition = Competition.find(params[:id])
+    @competition.update_match_day
   end
 
   private

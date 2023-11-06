@@ -79,6 +79,7 @@ class MatchPredictionsController < ApplicationController
   def current_predictions_update
     @user = current_user
     @user.update(match_prediction_params)
+    redirect_to
   end
 
   # not for production
