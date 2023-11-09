@@ -69,12 +69,11 @@ class GameWeeksController < ApplicationController
 
       predictions = match.match_predictions
       predictions.each do |p|
-      if p.home_score_guess? || p.away_score_guess?
+      if (p.home_score_guess? || p.away_score_guess?) && p.result == "pending"
         p.update_result
 
-        p.user
-        raise
-
+        user_competition = UserCompetition.where(user_id: p.user_id, competition_id: params[:competition_id]).first
+        user_competition.score += p.result.to_i
       end
 
 
