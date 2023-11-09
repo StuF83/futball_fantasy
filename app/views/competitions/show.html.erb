@@ -3,6 +3,8 @@
 
 <p><%= link_to 'Competitions Home Page', competitions_path%></p>
 
+<%= link_to "Update Competition Match Day", current_match_day_competition_path(@competition), data: { 'turbo-method' => :post } %>
+
 <p><%= link_to 'Leaderboard', leaderboard_competition_path(@competition) %></p>
 
 <p><%= link_to 'Add Player', edit_competition_path(@competition) %></p>
@@ -15,6 +17,7 @@
   <% @competition_game_weeks.each do |game_week| %>
     <div class="inline">
       <%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%>
+      <%= link_to "- Update", game_week_path(game_week), data: {turbo_method: :patch} %>
       <% if game_week.matches.any? { |match| match.status == nil } %>
         <%= link_to "- Update", game_week_path(game_week), data: {turbo_method: :patch} %>
       <% else %>
