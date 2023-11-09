@@ -45,13 +45,13 @@ class CompetitionsController < ApplicationController
     @competition = Competition.find(params[:id])
     @competition_game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).order(:id)
 
-    @competition_game_weeks.each do |game_week|
-      game_week.match_predictions.each do |match_prediction|
-        if match_prediction.home_score_guess? || match_prediction.away_score_guess?
-          match_prediction.update_result
-        end
-      end
-    end
+    # @competition_game_weeks.each do |game_week|
+    #   game_week.match_predictions.each do |match_prediction|
+    #     if match_prediction.home_score_guess? || match_prediction.away_score_guess?
+    #       match_prediction.update_result
+    #     end
+    #   end
+    # end
     # users = @competition.users.arel_table
     # this_user = users[:id].eq(current_user.id)
     # @current_user_first = Arel::Nodes::Case.new.when(this_user).then(1).else(2)

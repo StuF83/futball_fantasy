@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_17_132222) do
     t.integer "competition_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "score"
+    t.integer "score", default: 0
     t.index ["competition_id"], name: "index_user_competitions_on_competition_id"
     t.index ["user_id"], name: "index_user_competitions_on_user_id"
   end

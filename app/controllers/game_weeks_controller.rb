@@ -66,6 +66,21 @@ class GameWeeksController < ApplicationController
       match.away_score = match_updated["score"]["fullTime"]["away"]
       match.status = match_updated["score"]["winner"]
       match.save
+
+      predictions = match.match_predictions
+      predictions.each do |p|
+      if p.home_score_guess? || p.away_score_guess?
+        p.update_result
+
+        p.user
+        raise
+
+      end
+
+
+
+    end
+
     end
     redirect_to game_week_path(@game_week)
   end
