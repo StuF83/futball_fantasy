@@ -17,8 +17,8 @@ Rails.application.routes.draw do
   resources :competitions, only: [:index, :show, :new, :create, :update, :edit] do
     get 'leaderboard', on: :member
     post 'current_match_day', on: :member
-    resources :game_weeks, only: [:new, :create, :index]
+    resources :game_weeks, only: [:new, :create, :index, :update]
   end
 
-  resources :game_weeks, only: [:show, :destroy, :update]
+  resources :game_weeks, only: [:show, :destroy ]
 end
