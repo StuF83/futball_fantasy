@@ -34,7 +34,7 @@ class MatchPredictionsController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     end
-    # send_guesses(@predictions)
+    send_guesses(@predictions)
   end
 
   def edit
@@ -72,14 +72,20 @@ class MatchPredictionsController < ApplicationController
   end
 
   def current_predictions
-    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 7.day) )
+    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 14.day) )
     @user = current_user
   end
 
   def current_predictions_update
+
     @user = current_user
     @user.update(match_prediction_params)
-    redirect_to
+    @match_predictions = []
+    match_prediction_params["match_predictions_attributes"].each_value do |value|
+      @match_predictions.push(MatchPrediction.where(id: value["id"]).first)
+    end
+
+    send_guesses(@match_predictions)
   end
 
   # not for production
