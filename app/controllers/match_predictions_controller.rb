@@ -90,7 +90,7 @@ class MatchPredictionsController < ApplicationController
 
   # not for production
   def generate_predictions
-    @predictions = MatchPrediction.all.where(result: "pending", cut_off_date: ( Time.now.midnight - 90.day)..Time.now.midnight)
+    @predictions = MatchPrediction.all.where(result: "pending", cut_off_date: ( Time.now.midnight - 120.day)..Time.now.midnight)
     @predictions.each do |prediction|
       prediction.home_score_guess = rand(0..4)
       prediction.away_score_guess = rand(0..4)

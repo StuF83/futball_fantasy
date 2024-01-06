@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :game_weeks, through: :competitions
 
   accepts_nested_attributes_for :match_predictions, :reject_if => proc { |attributes| attributes['home_score_guess'].blank? || attributes['away_score_guess'].blank? }
+
+  enum role: [:player, :admin]
 end
