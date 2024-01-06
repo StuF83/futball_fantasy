@@ -21,7 +21,7 @@
           </button>
           <nav class="hidden sm:block space-x-8 text-xl" aria-label="main">
             <p class="hover:opacity-70 inline-block"><%= "#{current_user.email}" if current_user %></p>
-            <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:opacity-70" %>
+            <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "hover:opacity-70" if user_signed_in?%>
           </nav>
         </div>
       </section>
