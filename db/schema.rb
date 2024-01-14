@@ -11,9 +11,12 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "competition_game_weeks", force: :cascade do |t|
-    t.integer "competition_id", null: false
-    t.integer "game_week_id", null: false
+    t.bigint "competition_id", null: false
+    t.bigint "game_week_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["competition_id"], name: "index_competition_game_weeks_on_competition_id"
@@ -28,8 +31,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
   end
 
   create_table "game_week_matches", force: :cascade do |t|
-    t.integer "game_week_id", null: false
-    t.integer "match_id", null: false
+    t.bigint "game_week_id", null: false
+    t.bigint "match_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_week_id"], name: "index_game_week_matches_on_game_week_id"
@@ -47,10 +50,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
   create_table "match_predictions", force: :cascade do |t|
     t.integer "home_score_guess"
     t.integer "away_score_guess"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "match_id", null: false
+    t.bigint "match_id", null: false
     t.string "result", default: "pending"
     t.date "cut_off_date"
     t.index ["match_id"], name: "index_match_predictions_on_match_id"
@@ -71,8 +74,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
   end
 
   create_table "user_competitions", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "competition_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "competition_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "score", default: 0
