@@ -1,6 +1,6 @@
 <h1>Hello edit competition page</h1>
 
 <%= form_with model: @competition do |field| %>
-  <%= field.collection_check_boxes :user_ids, User.includes(:competitions).where(competitions: { id: nil }).order(:eamil), :id, :email, {include_hidden: false, checked: @competition.users.map(&:id)} %>
+  <%= field.collection_check_boxes :user_ids, User.includes(:competitions).where(competitions: { id: nil }).order(:email), :id, :email, {include_hidden: false, checked: @competition.users.map(&:id)} %>
   <%= field.submit %>
 <% end %>
