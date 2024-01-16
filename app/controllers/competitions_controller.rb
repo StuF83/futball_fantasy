@@ -2,6 +2,7 @@ class CompetitionsController < ApplicationController
   def index
     user = current_user
     @competitions = user.competitions
+    # render @competitions
   end
 
   def new

@@ -18,7 +18,9 @@
 <section>
   <% @competition_game_weeks.each do |game_week| %>
     <div class="inline">
-      <%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week)%>
+      <h3 id=game-week-<%= game_week.week_number %>><%= "Game Week " + game_week.week_number.to_s %></h3>
+
+      <%= link_to "Game Week #{game_week.week_number}", game_week_path(game_week), id: "game-week"%>
       <%= link_to "- Update", competition_game_week_path(game_week), data: {turbo_method: :patch} %>
       <% if game_week.matches.any? { |match| match.status == nil } %>
         <%= link_to "- Update", competition_game_week_path(game_week), data: {turbo_method: :patch} %>
