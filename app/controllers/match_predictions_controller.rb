@@ -16,7 +16,6 @@ class MatchPredictionsController < ApplicationController
   end
 
   def create
-    raise
     @predictions = []
     params["predictions"].each do |prediction|
       # @match_prediction = MatchPrediction.new(home_score_guess: prediction["home_score_guess"],
@@ -30,6 +29,7 @@ class MatchPredictionsController < ApplicationController
 
       if @match_prediction.save
         @predictions << @match_prediction
+        redirect_to competitions_path
       else
         render :new, status: :unprocessable_entity
       end
@@ -47,7 +47,6 @@ class MatchPredictionsController < ApplicationController
       #need to add a redirect here
       #also an updated bot message to discord
     else
-      raise
       render :edit, status: :unprocessable_entity
     end
   end
@@ -77,7 +76,6 @@ class MatchPredictionsController < ApplicationController
   end
 
   def current_predictions_update
-
     @user = current_user
     @user.update(match_prediction_params)
     @match_predictions = []
@@ -86,6 +84,7 @@ class MatchPredictionsController < ApplicationController
     end
 
     send_guesses(@match_predictions)
+    redirect_to competitions_path
   end
 
   # not for production
