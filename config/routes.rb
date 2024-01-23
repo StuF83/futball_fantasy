@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   root 'competitions#index'
   devise_for :users
 
-  get 'matches/index', to: 'matches#index'
-
   get '/match_predictions/current_predictions/', to: 'match_predictions#current_predictions'
   patch '/match_predictions/current_predictions_update/', to: 'match_predictions#current_predictions_update'
 
@@ -13,8 +11,6 @@ Rails.application.routes.draw do
   resources :competitions, only: [:index, :show, :new, :create, :update, :edit] do
     get 'leaderboard', on: :member
     post 'current_match_day', on: :member
-    resources :game_weeks, only: [:new, :create, :index, :update]
+    resources :game_weeks, only: [:update]
   end
-
-  resources :game_weeks, only: [:show, :destroy ]
 end

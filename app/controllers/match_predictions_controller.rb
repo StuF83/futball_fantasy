@@ -1,54 +1,35 @@
 class MatchPredictionsController < ApplicationController
-  def index
+
+  def current_predictions
+    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 14.day) )
     @user = current_user
-    @game_week = GameWeek.find(params[:game_week_id])
-    @match_predictions = GameWeek.find(params[:game_week_id]).match_predictions.where(user: current_user)
   end
 
-  def new
+  def current_predictions_update
     @user = current_user
-    @week = GameWeek.find(params[:game_week_id])
-    @matches = @week.matches
-    @empty_predictions = []
-    @matches.each do |match|
-      @empty_predictions.push(MatchPrediction.new)
+    @user.update(match_prediction_params)
+    @match_predictions = []
+    match_prediction_params["match_predictions_attributes"].each_value do |value|
+      @match_predictions.push(MatchPrediction.where(id: value["id"]).first)
+    end
+    send_guesses(@match_predictions)
+    redirect_to competitions_path
+  end
+
+  # not for production
+  def generate_predictions
+    @predictions = MatchPrediction.all.where(result: "pending", cut_off_date: ( Time.now.midnight - 120.day)..Time.now.midnight)
+    @predictions.each do |prediction|
+      prediction.home_score_guess = rand(0..4)
+      prediction.away_score_guess = rand(0..4)
+      prediction.update_result
     end
   end
 
-  def create
-    @predictions = []
-    params["predictions"].each do |prediction|
-      # @match_prediction = MatchPrediction.new(home_score_guess: prediction["home_score_guess"],
-      #                     away_score_guess: prediction["away_score_guess"],
-      #                     user_id: current_user.id,
-      #                     match_id: prediction["match_id"])
-      @match_prediction = MatchPrediction.new(home_score_guess: match_prediction_params["home_score_guess"],
-                            away_score_guess: match_prediction_params["away_score_guess"],
-                            user_id: current_user.id,
-                            match_id: match_prediction_params["match_id"])
+  private
 
-      if @match_prediction.save
-        @predictions << @match_prediction
-        redirect_to competitions_path
-      else
-        render :new, status: :unprocessable_entity
-      end
-    end
-    send_guesses(@predictions)
-  end
-
-  def edit
-    @match_prediction = MatchPrediction.find(params[:id])
-  end
-
-  def update
-    @match_prediction = MatchPrediction.find(params[:id])
-    if @match_prediction.update(match_prediction_params)
-      #need to add a redirect here
-      #also an updated bot message to discord
-    else
-      render :edit, status: :unprocessable_entity
-    end
+  def match_prediction_params
+    params.require(:user).permit(match_predictions_attributes: [:home_score_guess, :away_score_guess, :id])
   end
 
   def send_guesses(predictions)
@@ -68,38 +49,5 @@ class MatchPredictionsController < ApplicationController
       bot.stop
     end
     bot.run
-  end
-
-  def current_predictions
-    @current_predictions = MatchPrediction.includes(:match).where(user: current_user, cut_off_date: (Date.today + 1.day)..(Date.today + 14.day) )
-    @user = current_user
-  end
-
-  def current_predictions_update
-    @user = current_user
-    @user.update(match_prediction_params)
-    @match_predictions = []
-    match_prediction_params["match_predictions_attributes"].each_value do |value|
-      @match_predictions.push(MatchPrediction.where(id: value["id"]).first)
-    end
-
-    send_guesses(@match_predictions)
-    redirect_to competitions_path
-  end
-
-  # not for production
-  def generate_predictions
-    @predictions = MatchPrediction.all.where(result: "pending", cut_off_date: ( Time.now.midnight - 120.day)..Time.now.midnight)
-    @predictions.each do |prediction|
-      prediction.home_score_guess = rand(0..4)
-      prediction.away_score_guess = rand(0..4)
-      prediction.update_result
-    end
-  end
-
-  private
-
-  def match_prediction_params
-    params.require(:user).permit(match_predictions_attributes: [:home_score_guess, :away_score_guess, :id])
   end
 end
