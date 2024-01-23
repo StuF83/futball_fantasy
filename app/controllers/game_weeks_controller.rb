@@ -51,7 +51,8 @@ class GameWeeksController < ApplicationController
   end
 
   def update
-    @game_week = GameWeek.find(params[:id])
+    @competition = Competition.find(params[:id])
+    @game_week = GameWeek.find(@competition.match_day)
     season = '2023'
     matchday = @game_week.week_number
     football_data_api = Rails.application.credentials.football_data_api

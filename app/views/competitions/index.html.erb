@@ -2,11 +2,6 @@
 
 <% if current_user.admin? %>
   <%= link_to "New Competition", new_competition_path  %>
-
-<% end %>
-
-<% @competitions.each do |competition| %>
-  <p><%= link_to competition.name, competition%></p>
 <% end %>
 
 <%= render(@competitions) %>
