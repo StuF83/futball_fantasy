@@ -1,7 +1,9 @@
 class CompetitionsController < ApplicationController
   def index
     user = current_user
-    @competitions = user.competitions
+    current_user.role == "admin" ? @competitions = Competition.all : @competitions = user.competitions
+    # @competitions = user.competitions?
+    # render @competitions
   end
 
   def new
@@ -43,8 +45,8 @@ class CompetitionsController < ApplicationController
 
   def show
     @competition = Competition.find(params[:id])
-    @competition_game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).order(:id)
-
+    # @competition_game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).order(:id)
+    @game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).order(:id)
     # @competition_game_weeks.each do |game_week|
     #   game_week.match_predictions.each do |match_prediction|
     #     if match_prediction.home_score_guess? || match_prediction.away_score_guess?
