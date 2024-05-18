@@ -9,31 +9,33 @@ class CompetitionsController < ApplicationController
   end
 
   def create
-    @competition = Competition.new(competition_params)
-    season = '2023'
-    football_data_api = Rails.application.credentials.football_data_api
-    api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}",
-      "X-Auth-Token" => football_data_api
-    ).read
+    competition_creator_service = CompetitionCreatorService.new(competition_params)
+    competition = competition_creator_service.create_competition_and_populate_matches
+    # @competition = Competition.new(competition_params)
+    # season = '2023'
+    # football_data_api = Rails.application.credentials.football_data_api
+    # api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}",
+    #   "X-Auth-Token" => football_data_api
+    # ).read
 
-    season_data = JSON.parse(api_data)
-    match_days = []
-    season_data["matches"].each do |match|
-      match_days << match["matchday"]
-    end
-    match_days.max.times do |i|
-      @competition.game_weeks << GameWeek.create(week_number: i+1)
-      @competition.save
-    end
-    season_data["matches"].each do |match|
-      @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["score"]["winner"], match_day: match["matchday"], api_id: match["id"])
-      @match.save
-    end
-    @competition.game_weeks.each do |game_week|
-      @matches = Match.where(match_day: game_week.week_number)
-      game_week.matches << @matches
-    end
-    redirect_to competition_path(@competition)
+    # season_data = JSON.parse(api_data)
+    # match_days = []
+    # season_data["matches"].each do |match|
+    #   match_days << match["matchday"]
+    # end
+    # match_days.max.times do |i|
+    #   @competition.game_weeks << GameWeek.create(week_number: i+1)
+    #   @competition.save
+    # end
+    # season_data["matches"].each do |match|
+    #   @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["score"]["winner"], match_day: match["matchday"], api_id: match["id"])
+    #   @match.save
+    # end
+    # @competition.game_weeks.each do |game_week|
+    #   @matches = Match.where(match_day: game_week.week_number)
+    #   game_week.matches << @matches
+    # end
+    redirect_to competition_path(competition)
   end
 
   def show
@@ -78,7 +80,8 @@ class CompetitionsController < ApplicationController
   private
 
   def competition_params
-    params.require(:competition).permit(:name, users_attributes: {})
+    # params.require(:competition).permit(:name, users_attributes: {})
+    params.require(:competition).permit(:name, :league, :season)
   end
 
   def competition_user_params

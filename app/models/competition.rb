@@ -2,8 +2,22 @@ class Competition < ApplicationRecord
   has_many :user_competitions
   has_many :users, through: :user_competitions
 
+  has_many :competition_matches
+  has_many :matches, through: :competition_matches
+
   has_many :competition_game_weeks
   has_many :game_weeks, through: :competition_game_weeks
+
+  validates :name, uniqueness: true
+
+  enum league: { Premier_League: 'PL' }
+  enum season: { "2023": "2023"}
+
+  def self.league_options
+    {
+      'Premier League': 'PL',
+    }
+  end
 
   def update_match_day
     season = '2023'
