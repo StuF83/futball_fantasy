@@ -1,5 +1,13 @@
 class GameWeeksController < ApplicationController
 
+  def show
+    # we want all of the match predictions that belong to a game that belongs to the current game_week
+    @game_week = GameWeek.where(id: params[:id]).joins(:matches => [:match_predictions])
+    @match_predictions = @game_week.first.match_predictions.where(user_id: current_user)
+    # raise
+
+  end
+
   def update
     @competition = Competition.find(params[:id])
     @game_week = GameWeek.find(@competition.match_day)

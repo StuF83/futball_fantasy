@@ -1,22 +1,5 @@
-<p>Game Week <%= @game_week.week_number %></p>
+<p>Game Week <%= @game_week.first.week_number %></p>
 
-<%= link_to "Update Game Week", game_week_path(@game_week), data: {turbo_method: :patch}  %>
-
-
-<% @game_week.matches.each do |match| %>
-  <p><%= match[:home_team] %></p>
-  <p><%= match[:away_team] %></p>
-  <% if match[:home_score] == nil %>
-    <p>-</p>
-  <% else %>
-    <p><%= match[:home_score] %></p>
-  <% end %>
-  <% if match[:away_score] == nil %>
-    <p>-</p>
-  <% else %>
-    <p><%= match[:away_score] %></p>
-  <% end %>
-  <p><%= match[:scheduled_date] %></p>
-  <br>
-
+<% @match_predictions.each do |match_prediction| %>
+  <p><%= match_prediction.id %></p>
 <% end %>
