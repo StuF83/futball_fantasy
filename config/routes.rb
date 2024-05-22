@@ -9,8 +9,12 @@ Rails.application.routes.draw do
   get '/match_predictions/generate_predictions', to: 'match_predictions#generate_predictions'
 
   resources :competitions, only: [:index, :show, :new, :create, :update, :edit] do
-    get 'leaderboard', on: :member
-    post 'current_match_day', on: :member
-    resources :game_weeks, only: [:update]
+    member do
+      get 'leaderboard'
+      post 'current_match_day'
+      get 'add_users'
+      post 'update_users'
+      # resources :game_weeks, only: [:update]
+    end
   end
 end

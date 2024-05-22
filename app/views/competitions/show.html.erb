@@ -4,7 +4,7 @@
 <% if current_user.admin? %>
   <%= link_to "Update Competition Match Day", current_match_day_competition_path(@competition), data: { 'turbo-method' => :post } %>
   <br>
-  <%= link_to 'Add Player', edit_competition_path(@competition) %>
+  <%= link_to 'Add Player', add_users_competition_path(@competition) %>
 <% end %>
 
 <p><%= link_to 'Competitions Home Page', competitions_path%></p>
