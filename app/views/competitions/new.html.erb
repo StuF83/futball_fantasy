@@ -3,5 +3,9 @@
 <%= form_with model: @competition do |field| %>
   <%= field.label :name %>
   <%= field.text_field :name %>
+  <%= field.label :league %>
+  <%= field.select :league, Competition.league_options.map { |label, value| [label, value] } %>
+  <%= field.label :season %>
+  <%= field.select :season, Competition.seasons.keys.map { |season| [season, season] } %>
   <%= field.submit %>
 <% end %>
