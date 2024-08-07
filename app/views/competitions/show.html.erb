@@ -12,6 +12,8 @@
 
 
 <%= link_to 'View your current predictions', match_predictions_current_predictions_path %>
+
+<p>Game Week = <%= @competition.match_day %></p>
 </section>
 
 <%= render @game_weeks %>

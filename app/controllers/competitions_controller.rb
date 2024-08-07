@@ -10,7 +10,7 @@ class CompetitionsController < ApplicationController
 
   def create
     @competition = Competition.new(competition_params)
-    season = '2023'
+    season = '2024'
     football_data_api = Rails.application.credentials.football_data_api
     api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}",
       "X-Auth-Token" => football_data_api
@@ -28,11 +28,9 @@ class CompetitionsController < ApplicationController
     season_data["matches"].each do |match|
       @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["score"]["winner"], match_day: match["matchday"], api_id: match["id"])
       @match.save
+      @competition.game_weeks.where(week_number: @match.match_day ).first.matches << @match
     end
-    @competition.game_weeks.each do |game_week|
-      @matches = Match.where(match_day: game_week.week_number)
-      game_week.matches << @matches
-    end
+    @competition.update_match_day
     redirect_to competition_path(@competition)
   end
 
