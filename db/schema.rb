@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_18_160753) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,11 +23,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
     t.index ["game_week_id"], name: "index_competition_game_weeks_on_game_week_id"
   end
 
+  create_table "competition_matches", force: :cascade do |t|
+    t.bigint "competition_id", null: false
+    t.bigint "match_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competition_id", "match_id"], name: "index_competition_matches_on_competition_id_and_match_id", unique: true
+    t.index ["competition_id"], name: "index_competition_matches_on_competition_id"
+    t.index ["match_id"], name: "index_competition_matches_on_match_id"
+  end
+
   create_table "competitions", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "match_day"
+    t.string "season"
+    t.string "league"
   end
 
   create_table "game_week_matches", force: :cascade do |t|
@@ -71,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
     t.datetime "updated_at", null: false
     t.integer "match_day"
     t.integer "api_id"
+    t.string "league_code"
   end
 
   create_table "user_competitions", force: :cascade do |t|
@@ -98,6 +111,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_131745) do
 
   add_foreign_key "competition_game_weeks", "competitions"
   add_foreign_key "competition_game_weeks", "game_weeks"
+  add_foreign_key "competition_matches", "competitions"
+  add_foreign_key "competition_matches", "matches"
   add_foreign_key "game_week_matches", "game_weeks"
   add_foreign_key "game_week_matches", "matches"
   add_foreign_key "match_predictions", "matches"
