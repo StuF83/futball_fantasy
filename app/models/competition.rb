@@ -6,7 +6,7 @@ class Competition < ApplicationRecord
   has_many :game_weeks, through: :competition_game_weeks
 
   def update_match_day
-    season = '2023'
+    season = '2024'
     football_data_api = Rails.application.credentials.football_data_api
     api_data = URI.open("https://api.football-data.org/v4/competitions/PL/standings?season=#{season}",
       "X-Auth-Token" => football_data_api
