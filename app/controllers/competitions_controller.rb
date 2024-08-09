@@ -7,10 +7,12 @@ class CompetitionsController < ApplicationController
 
   def new
     @competition = Competition.new
+    authorize @competition, :create?
   end
 
   def create
     @competition = Competition.new(competition_params)
+    authorize @competition, :create?
     season = '2024'
     football_data_api = Rails.application.credentials.football_data_api
     api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}",
