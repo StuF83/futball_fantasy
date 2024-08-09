@@ -1,4 +1,5 @@
 class CompetitionsController < ApplicationController
+
   def index
     user = current_user
     current_user.role == "admin" ? @competitions = Competition.all : @competitions = user.competitions
