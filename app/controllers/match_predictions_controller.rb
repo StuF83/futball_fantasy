@@ -18,7 +18,6 @@ class MatchPredictionsController < ApplicationController
   # not for production
   if  Rails.env.development? || Rails.env.test?
     def generate_predictions
-      raise
       @predictions = MatchPrediction.all.where(result: "pending", cut_off_date: ( Time.now.midnight - 120.day)..Time.now.midnight)
       @predictions.each do |prediction|
         prediction.home_score_guess = rand(0..4)
