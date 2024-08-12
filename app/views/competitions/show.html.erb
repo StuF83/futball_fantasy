@@ -1,19 +1,20 @@
 <section class="p-6 my-12">
-<h1>hello from competitions show</h1>
+<h1><%= @competition.name.capitalize %></h1>
 
 <% if current_user.admin? %>
-  <%= link_to "Update Competition Match Day", current_match_day_competition_path(@competition), data: { 'turbo-method' => :post } %>
-  <br>
-  <%= link_to 'Add Player', edit_competition_path(@competition) %>
+  <ul>
+    <li> <%= link_to "Update Competition Match Day", current_match_day_competition_path(@competition), data: { 'turbo-method' => :post } %> - Use this link to update the current Game Week</li>
+    <li> <%= link_to 'Add Player', edit_competition_path(@competition) %> - Add a registerd player to the competition</li>
+  </ul>
 <% end %>
 
-<p><%= link_to 'Competitions Home Page', competitions_path%></p>
-<p><%= link_to 'Leaderboard', leaderboard_competition_path(@competition) %></p>
+<ul>
+  <li><%= link_to 'Competitions Home Page', competitions_path %></li>
+  <li><%= link_to 'Leaderboard', leaderboard_competition_path(@competition) %></li>
+  <li> <%= link_to 'View your current predictions', match_predictions_current_predictions_path %> </li>
+</ul>
 
-
-<%= link_to 'View your current predictions', match_predictions_current_predictions_path %>
-
-<p><% @competition.match_day %></p>
+<p>Current Game Week <%= @competition.match_day %></p>
 </section>
 
 <%= render @game_weeks %>

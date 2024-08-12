@@ -11,4 +11,12 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :match_predictions, :reject_if => proc { |attributes| attributes['home_score_guess'].blank? || attributes['away_score_guess'].blank? }
 
   enum role: [:player, :admin]
+
+  def active_for_authentication? 
+    super && approved?
+  end 
+    
+  def inactive_message 
+    approved? ? super : :not_approved
+  end
 end
