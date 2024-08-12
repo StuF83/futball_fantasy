@@ -15,4 +15,6 @@ Rails.application.routes.draw do
     post 'current_match_day', on: :member
     resources :game_weeks, only: [:update]
   end
+
+  resources :players, only: [:index, :update]
 end
