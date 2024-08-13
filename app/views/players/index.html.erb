@@ -1,0 +1,7 @@
+<h1>Admin Console</h1>
+
+<% @players_unapproved.each do |player| %>
+    <%= form_for(player, url: player_path(player)) do |field|%>
+        <p><%= player.email %> - <%= field.hidden_field :approved, { :value => true } %> - <%= field.submit "Approve Player" %></p>
+    <% end %>
+<% end %>

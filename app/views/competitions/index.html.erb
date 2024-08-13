@@ -1,11 +1,9 @@
-<h1>hello from competitions index</h1>
 
 <% if current_user.admin? %>
+  <h1>Competitions Index Page</h1>
   <%= link_to "New Competition", new_competition_path  %>
+  <% else %>
+  <h1>Your Competitions</h1>
 <% end %>
 
 <%= render(@competitions) %>
-
-
-
-<p> Invite a player link should go on this page </p>

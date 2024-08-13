@@ -45,7 +45,7 @@ class CompetitionsController < ApplicationController
 
   def edit
     @competition = Competition.find(params[:id])
-    @users = User.all
+    @users = User.where(approved: true)
   end
 
   def update
