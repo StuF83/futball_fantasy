@@ -5,7 +5,7 @@ class PlayersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    authorize @user
+    authorize @user, policy_class: PlayerPolicy
     if @user.update(admin_user_params)
       redirect_to players_path, notice: 'Player was successfully approved'
     else
