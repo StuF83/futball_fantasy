@@ -3,8 +3,8 @@
 
 <% if current_user.admin? %>
   <ul>
-    <li> <%= link_to "Update Competition Match Day", current_match_day_competition_path(@competition), data: { 'turbo-method' => :post } %> - Use this link to update the current Game Week</li>
-    <li> <%= link_to 'Add Player', edit_competition_path(@competition) %> - Add a registerd player to the competition</li>
+    <li> <%= link_to "Update Game Week", current_match_day_competition_path(@competition), data: { 'turbo-method' => :post } %> - Use this link to update the current Game Week</li>
+    <li> <%= link_to 'Add Player', edit_competition_path(@competition) %> - Add a registered player to the competition</li>
   </ul>
 <% end %>
 
