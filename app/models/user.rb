@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :registerable
   has_many :match_predictions
   has_many :user_competitions
   has_many :competitions, through: :user_competitions
@@ -12,11 +12,11 @@ class User < ApplicationRecord
 
   enum role: [:player, :admin]
 
-  def active_for_authentication? 
+  def active_for_authentication?
     super && approved?
-  end 
-    
-  def inactive_message 
+  end
+
+  def inactive_message
     approved? ? super : :not_approved
   end
 end
