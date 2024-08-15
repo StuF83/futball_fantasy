@@ -1,7 +1,8 @@
-<h1>Admin Console</h1>
+<h1 class="text-center text-4xl font-bold text-gray-800 mt-4">Admin Console</h1>
+<br>
 
 <% @players_unapproved.each do |player| %>
     <%= form_for(player, url: player_path(player)) do |field|%>
-        <p><%= player.email %> - <%= field.hidden_field :approved, { :value => true } %> - <%= field.submit "Approve Player" %></p>
+        <p><%= player.email %> - <%= field.hidden_field :approved, { :value => true } %> - <%= field.submit "Approve Player", class: 'custom-button' %></p>
     <% end %>
 <% end %>
