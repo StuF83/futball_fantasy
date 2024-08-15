@@ -1,1 +1,1 @@
-<p><%= link_to competition.name, competition_path(competition, anchor: "game-week-#{competition.match_day}") %></p>
+<p><%= link_to competition.name.capitalize, competition_path(competition, anchor: "game-week-#{competition.match_day}"), class: 'custom-link' %></p>

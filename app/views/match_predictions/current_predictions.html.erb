@@ -1,6 +1,6 @@
-<p>Hello from current predictions</p>
-
-<p>These are all your active predictions, you can still update your predictions until 24 hours before the match is scheduled to play</p>
+<h1 class="text-center text-4xl font-bold text-gray-800 mt-4">Current predictions</h1>
+<br>
+<p>These are all your active predictions, you can still update your predictions until the day before the match is scheduled to play</p>
 
 <%= form_with model: @user, url: match_predictions_current_predictions_update_path, class: "grid grid-cols-3 justify-items-center" do |form| %>
       <%= form.fields_for :match_predictions, @current_predictions do |pf| %>
@@ -9,5 +9,5 @@
           <p class="class"> <%= "#{match.home_team} VS #{match.away_team}" %> </p>
           <%= pf.number_field :away_score_guess, class: "class" %>
       <% end %>
-  <%= form.submit "Save Predictions"%>
+  <%= form.submit "Save Predictions", class: 'custom-button'%>
 <% end %>
