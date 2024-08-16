@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_12_084052) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_16_091031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,7 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_12_084052) do
     t.string "away_team"
     t.integer "home_score"
     t.integer "away_score"
-    t.date "scheduled_date"
+    t.datetime "scheduled_date"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
