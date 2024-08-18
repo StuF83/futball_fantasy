@@ -29,7 +29,7 @@ class CompetitionsController < ApplicationController
       @competition.save
     end
     season_data["matches"].each do |match|
-      @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["score"]["winner"], match_day: match["matchday"], api_id: match["id"])
+      @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["status"], match_day: match["matchday"], api_id: match["id"])
       @match.save
       @competition.game_weeks.where(week_number: @match.match_day ).first.matches << @match
     end
