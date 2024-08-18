@@ -2,12 +2,26 @@
 <br>
 <p>These are all your active predictions, you can still update your predictions until the day before the match is scheduled to play</p>
 
-<%= form_with model: @user, url: match_predictions_current_predictions_update_path, class: "grid grid-cols-3 justify-items-center" do |form| %>
+<div class="">
+  <%= form_with model: @user, url: match_predictions_current_predictions_update_path, class: "stack" do |form| %>
       <%= form.fields_for :match_predictions, @current_predictions do |pf| %>
+        <div class="bg-blue-200 flex flex-col items-center">
           <% match = Match.find(pf.object[:match_id]) %>
-          <%= pf.number_field :home_score_guess, class: "class" %>
-          <p class="class"> <%= "#{match.home_team} VS #{match.away_team}" %> </p>
-          <%= pf.number_field :away_score_guess, class: "class" %>
+          <div class="flex items-center">
+            <p class="w-[12ch] text-center px-4 flex-shrink-0"> <%= match.home_team %></p>
+            <%= pf.number_field :home_score_guess, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
+            <p class="px-4 flex-shrink-0">Plus</p>
+            <p class="px-4 flex-shrink-0">Minus</p>
+          </div>
+          <p>vs</p>
+          <div class="flex items-center">
+            <p class=" w-[12ch] text-center px-4 flex-shrink-0"> <%= match.away_team %></p>
+            <%= pf.number_field :away_score_guess, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
+            <p class="px-4 flex-shrink-0">Plus</p>
+            <p class="px-4 flex-shrink-0">Minus</p>
+          </div>
+        </div>
       <% end %>
-  <%= form.submit "Save Predictions", class: 'custom-button'%>
-<% end %>
+    <%= form.submit "Save Predictions", class: 'custom-button'%>
+  <% end %>
+</div>
