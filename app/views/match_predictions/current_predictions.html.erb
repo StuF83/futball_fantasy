@@ -10,15 +10,23 @@
           <div class="flex items-center">
             <p class="w-[12ch] text-center px-4 flex-shrink-0"> <%= match.home_team %></p>
             <%= pf.number_field :home_score_guess, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
-            <p class="px-4 flex-shrink-0">Plus</p>
-            <p class="px-4 flex-shrink-0">Minus</p>
+            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+              Up
+            </button>
+            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+              Down
+            </button>
           </div>
           <p>vs</p>
           <div class="flex items-center">
             <p class=" w-[12ch] text-center px-4 flex-shrink-0"> <%= match.away_team %></p>
             <%= pf.number_field :away_score_guess, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
-            <p class="px-4 flex-shrink-0">Plus</p>
-            <p class="px-4 flex-shrink-0">Minus</p>
+            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+              Up
+            </button>
+            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+              Down
+            </button>
           </div>
         </div>
       <% end %>
