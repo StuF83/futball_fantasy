@@ -5,26 +5,26 @@
 <div class="">
   <%= form_with model: @user, url: match_predictions_current_predictions_update_path, class: "stack" do |form| %>
       <%= form.fields_for :match_predictions, @current_predictions do |pf| %>
-        <div class="bg-blue-200 flex flex-col items-center">
+        <div class="bg-blue-200 flex flex-col items-center" data-controller="prediction-increment">
           <% match = Match.find(pf.object[:match_id]) %>
           <div class="flex items-center">
             <p class="w-[12ch] text-center px-4 flex-shrink-0"> <%= match.home_team %></p>
-            <%= pf.number_field :home_score_guess, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
-            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <%= pf.number_field :home_score_guess, data: {prediction_increment_target: "homeScore"}, class: "flex-shrink w-full max-w-xs text-center px-2" %>
+            <button type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400" data-action="click->prediction-increment#increaseHome">
               Up
             </button>
-            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400" data-action="click->prediction-increment#decreaseHome">
               Down
             </button>
           </div>
           <p>vs</p>
           <div class="flex items-center">
             <p class=" w-[12ch] text-center px-4 flex-shrink-0"> <%= match.away_team %></p>
-            <%= pf.number_field :away_score_guess, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
-            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <%= pf.number_field :away_score_guess, data: {prediction_increment_target: "awayScore"}, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
+            <button type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400", data-action="click->prediction-increment#increaseAway">
               Up
             </button>
-            <button class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <button type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400" data-action="click->prediction-increment#decreaseAway">
               Down
             </button>
           </div>
