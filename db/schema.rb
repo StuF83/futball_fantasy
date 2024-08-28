@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_16_091031) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_28_142015) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_16_091031) do
     t.bigint "match_id", null: false
     t.string "result", default: "pending"
     t.date "cut_off_date"
+    t.bigint "competition_id"
+    t.index ["competition_id"], name: "index_match_predictions_on_competition_id"
     t.index ["match_id"], name: "index_match_predictions_on_match_id"
     t.index ["user_id"], name: "index_match_predictions_on_user_id"
   end
@@ -101,6 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_16_091031) do
   add_foreign_key "competition_game_weeks", "game_weeks"
   add_foreign_key "game_week_matches", "game_weeks"
   add_foreign_key "game_week_matches", "matches"
+  add_foreign_key "match_predictions", "competitions"
   add_foreign_key "match_predictions", "matches"
   add_foreign_key "match_predictions", "users"
   add_foreign_key "user_competitions", "competitions"
