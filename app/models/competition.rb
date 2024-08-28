@@ -5,6 +5,8 @@ class Competition < ApplicationRecord
   has_many :competition_game_weeks
   has_many :game_weeks, through: :competition_game_weeks
 
+  has_many :match_predictions
+
   def update_match_day
     season = '2024'
     football_data_api = Rails.application.credentials.football_data_api

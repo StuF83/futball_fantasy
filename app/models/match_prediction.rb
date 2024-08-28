@@ -2,6 +2,8 @@ class MatchPrediction < ApplicationRecord
   belongs_to :user
   belongs_to :match
 
+  belongs_to :competition
+
   def update_result
     if self.result == 'pending' && self.match.status != nil
       if self.home_score_guess == self.match.home_score && self.away_score_guess == self.match.away_score

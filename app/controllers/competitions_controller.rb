@@ -45,6 +45,7 @@ class CompetitionsController < ApplicationController
           match_prediction = match.match_predictions.build
           match_prediction.user = @user
           match_prediction.cut_off_date = match.scheduled_date - 1
+          match_prediction.competition_id = @competition.id
           match_prediction.save
         end
       end
@@ -55,9 +56,9 @@ class CompetitionsController < ApplicationController
 
   def leaderboard
     @competition = Competition.find(params[:id])
-    @players = @competition.users
-    @competition_user_predictions = Competition.includes(users: :match_predictions).where(:competitions => {:id => params[:id]})
-  end
+    @players = User.joins(:competitions).where(competitions: {id: params[:id]})
+    @scores = {}
+    end
 
   def current_match_day
     @competition = Competition.find(params[:id])
