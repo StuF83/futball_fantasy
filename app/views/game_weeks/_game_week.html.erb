@@ -2,7 +2,7 @@
 
 <% if current_user.role == "admin" %>
   <% if game_week.matches.any? { |match| match.status != "FINISHED" }  %>
-    <p><%= link_to "- Update", competition_game_week_path(game_week), data: {turbo_method: :patch} %></p>
+    <p><%= link_to "- Update", competition_game_week_path(@competition, game_week), data: {turbo_method: :patch} %></p>
   <% else %>
     <p class="text-slate-500 inline">- All Matches Up To Date</p>
   <% end %>

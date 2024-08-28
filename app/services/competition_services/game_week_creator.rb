@@ -1,4 +1,4 @@
-module CompetitionCreationServices
+module CompetitionServices
   class GameWeekCreator
     def initialize(competition, season_data)
       @competition = competition
@@ -7,7 +7,8 @@ module CompetitionCreationServices
 
     def create_game_weeks
       game_weeks = @season_data["matches"].map { |match| match["matchday"]}.uniq
-      game_weeks.each { |game_week| @competition.game_week.create!(week_number: game_week)}
+      game_weeks.each { |game_week| @competition.game_weeks.build(week_number: game_week)}
+      @competition.save
     end
   end
 end

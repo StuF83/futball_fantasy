@@ -15,26 +15,12 @@ class CompetitionsController < ApplicationController
     authorize @competition, :create?
     league = 'PL'
     season = '2024'
-    api_data = ApiServices::FootballDataApi.new(league: league, season: season)
+    api_data = ApiServices::FootballDataApi.new(league: league, season: season).call_api
 
     season_data = JSON.parse(api_data)
-    CompetitionServices::GameWeekCreationService.new(@competition, season_data).create_game_weeks
-    # match_days = []
-    # season_data["matches"].each do |match|
-    #   match_days << match["matchday"]
-    # end
-    # match_days.max.times do |i|
-    #   @competition.game_weeks << GameWeek.create(week_number: i+1)
-    #   @competition.save
-    # end
-
-    # season_data["matches"].each do |match|
-    #   @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["status"], match_day: match["matchday"], api_id: match["id"])
-    #   @match.save
-    #   @competition.game_weeks.where(week_number: @match.match_day ).first.matches << @match
-    # end
+    CompetitionServices::GameWeekCreator.new(@competition, season_data).create_game_weeks
+    CompetitionServices::MatchPopulator.new(@competition, season_data).populate_game_week_matches
     # @competition.update_match_day
-
     redirect_to competition_path(@competition)
   end
 
