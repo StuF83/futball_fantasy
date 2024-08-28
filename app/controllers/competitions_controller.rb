@@ -13,27 +13,28 @@ class CompetitionsController < ApplicationController
   def create
     @competition = Competition.new(competition_params)
     authorize @competition, :create?
+    league = 'PL'
     season = '2024'
-    football_data_api = Rails.application.credentials.football_data_api
-    api_data = URI.open("https://api.football-data.org/v4/competitions/PL/matches?season=#{season}",
-      "X-Auth-Token" => football_data_api
-    ).read
+    api_data = ApiServices::FootballDataApi.new(league: league, season: season)
 
     season_data = JSON.parse(api_data)
-    match_days = []
-    season_data["matches"].each do |match|
-      match_days << match["matchday"]
-    end
-    match_days.max.times do |i|
-      @competition.game_weeks << GameWeek.create(week_number: i+1)
-      @competition.save
-    end
-    season_data["matches"].each do |match|
-      @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["status"], match_day: match["matchday"], api_id: match["id"])
-      @match.save
-      @competition.game_weeks.where(week_number: @match.match_day ).first.matches << @match
-    end
-    @competition.update_match_day
+    CompetitionServices::GameWeekCreationService.new(@competition, season_data).create_game_weeks
+    # match_days = []
+    # season_data["matches"].each do |match|
+    #   match_days << match["matchday"]
+    # end
+    # match_days.max.times do |i|
+    #   @competition.game_weeks << GameWeek.create(week_number: i+1)
+    #   @competition.save
+    # end
+
+    # season_data["matches"].each do |match|
+    #   @match = Match.new(home_team: match["homeTeam"]["tla"], away_team: match["awayTeam"]["tla"], home_score: match["score"]["fullTime"]["home"], away_score: match["score"]["fullTime"]["away"], scheduled_date: match["utcDate"], status: match["status"], match_day: match["matchday"], api_id: match["id"])
+    #   @match.save
+    #   @competition.game_weeks.where(week_number: @match.match_day ).first.matches << @match
+    # end
+    # @competition.update_match_day
+
     redirect_to competition_path(@competition)
   end
 
