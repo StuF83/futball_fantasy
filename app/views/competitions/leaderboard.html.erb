@@ -7,7 +7,7 @@
           <% score += prediction.result.to_i %>
           <% end %>
       <% end %>
-      <% @scores["#{player.email}"] = score %>
+      <% @scores["#{player.username}"] = score %>
   <% end %>
   <% @scores = @scores.sort_by{ |key, value| value}.reverse.to_h %>
 <table class="table-auto border-collapse">
