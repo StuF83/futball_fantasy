@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_many :competitions, through: :user_competitions
   has_many :game_weeks, through: :competitions
 
+  validates_presence_of :username
+  validates_uniqueness_of :username
+  validates_length_of :username, :minimum => 4, :maximum => 10
+
   accepts_nested_attributes_for :match_predictions, :reject_if => proc { |attributes| attributes['home_score_guess'].blank? || attributes['away_score_guess'].blank? }
 
   enum role: [:player, :admin]
