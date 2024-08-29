@@ -15,7 +15,7 @@
       <% if i == 0 %>
         <td colspan="6"></td>
         <% game_week.users.order(id: :asc).each do |user| %>
-          <td colspan="2" class="px-4 text-center"><%= user.email %></td>
+          <td colspan="2" class="px-4 text-center -rotate-45 h-12"><%= user.username %></td>
         <% end %>
       </tr>
     <% end %>
