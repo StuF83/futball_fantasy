@@ -56,9 +56,11 @@ class CompetitionsController < ApplicationController
 
   def leaderboard
     @competition = Competition.find(params[:id])
-    @players = User.joins(:competitions).where(competitions: {id: params[:id]})
+    @players = User.joins(:competitions)
     @scores = {}
-    end
+    @game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).order(:week_number)
+    # raise
+  end
 
   def current_match_day
     @competition = Competition.find(params[:id])

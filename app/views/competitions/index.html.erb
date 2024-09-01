@@ -1,9 +1,0 @@
-
-<% if current_user.admin? %>
-  <h1 class="text-center text-4xl font-bold text-gray-800 mt-4">Competitions Index Page</h1>
-  <%= link_to "New Competition", new_competition_path, class: 'custom-link'  %>
-  <% else %>
-  <h1 class="text-center text-4xl font-bold text-gray-800 mt-4">Your Competitions</h1>
-<% end %>
-
-<%= render(@competitions) %>

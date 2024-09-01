@@ -18,6 +18,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        gold: '#FFD700',      // Gold color
+        silver: '#C0C0C0',    // Silver color
+        bronze: '#cd7f32',    // Bronze color
+        
         MCI: {
           50: "#67e8f9",
         },
