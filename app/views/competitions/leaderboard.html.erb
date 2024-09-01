@@ -1,20 +1,40 @@
 <h1 class="text-center text-4xl font-bold text-gray-800 mt-4">Competition leader board</h1>
 <br>
-  <% @players.each do |player| %>
-      <% score = 0 %>
-      <% player.match_predictions.each do |prediction| %>
-          <% if prediction.result != "pending" && prediction.competition_id == @competition.id %>
-          <% score += prediction.result.to_i %>
+<% @players.each do |player| %>
+<% match_predictions = player.match_predictions.where(competition_id: @competition.id) %>
+    <% score = 0 %>
+    <% match_predictions.each do |prediction| %>
+        <% if prediction.result != "pending" %>
+        <% score += prediction.result.to_i %>
+        <% end %>
+    <% end %>
+    <% @scores["#{player.id}"] = score %>
+<% end %>
+
+<% @scores = @scores.sort_by{ |player_id, score| score }.reverse.to_h %>
+<% positions = ScoreServices::PositionAggregator.new(@scores).determine_positions %>
+
+<div class="overflow-auto mb-8">
+  <table class="table-auto border-collapse overflow-scroll w-full">
+      <tr>
+        <th class ="bg-black text-white"></th>
+        <th class ="bg-black text-white"></th>
+        <th class="px-4 text-center bg-black text-white pl-2 pr-2">total</th>
+        <% @game_weeks.each do |game_week| %>
+          <th class="px-4 text-center bg-black text-white pl-2 pr-2"><%= game_week.week_number %></th>
+        <% end %>
+      </tr>  
+    <% positions.each do |position, player_scores|%>
+      <% player_scores.each do |player_score| %>
+        <tr class="<%= 'bg-gray-200' if player_score[0].to_i == current_user.id %>">
+          <td class="px-4 text-center p-0 pl-2 pr-2 <%= 'bg-gold' if position == "1" %> <%= 'bg-silver' if position == "2" %><%= 'bg-bronze' if position == "3" %>"><%= position %></td>
+          <td class="px-4 text-center bg-blue-100 pl-2 pr-2"><%= User.find(player_score[0]).username %></td>
+          <td class="px-4 text-center bg-green-100 pl-2 pr-2"><%= player_score[1] %></td>
+          <% @game_weeks.each do |game_week| %>
+            <td class="px-4 text-center pl-2 pr-2"><%= game_week.weekly_score(User.find(player_score[0])) %></td>
           <% end %>
-      <% end %>
-      <% @scores["#{player.username}"] = score %>
-  <% end %>
-  <% @scores = @scores.sort_by{ |key, value| value}.reverse.to_h %>
-<table class="table-auto border-collapse">
-  <% @scores.each do |key, value|%>
-    <tr>
-      <td><%= key %></td>
-      <td><%= value %></td>
-    </tr>
-  <% end %>
-</table>
+        <% end %>
+        </tr>
+    <% end %>
+  </table>
+</div>
