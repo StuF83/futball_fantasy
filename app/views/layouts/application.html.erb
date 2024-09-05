@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Nunito:wght@400;600;700&family=Ubuntu:wght@400;500;700&family=Source+Sans+Pro:wght@400;600;700&family=Poppins:wght@400;500;700&family=Lato:wght@400;700&family=Work+Sans:wght@400;600;700&family=Merriweather+Sans:wght@400;700&family=Raleway:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -13,7 +15,7 @@
   </head>
 
   <body class="min-h-screen bg-slate-50">
-    <header class="bg-teal-700 text-white sticky top-0 z-10">
+    <header class="bg-steelblue text-white sticky top-0 z-10">
       <section class="max-w-4xl mx-auto p-4 flex justify-between items-center">
         <%= link_to("⚽Super-10", root_path, class: "text-3xl font-medium") %>
         <div>
