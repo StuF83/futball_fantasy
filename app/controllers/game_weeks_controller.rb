@@ -12,25 +12,16 @@ class GameWeeksController < ApplicationController
 
     data = JSON.parse(api_data)
     data['matches'].each do |match_updated|
-      match do
-        match = Match.where(api_id: match_updated["id"]).first
-        match.home_score = match_updated["score"]["fullTime"]["home"]
-        match.away_score = match_updated["score"]["fullTime"]["away"]
-        match.status = match_updated["status"]
-        match.scheduled_date = match_updated["utcDate"]
-        match.save!
-
-        if match.status == "FINISHED"
-          predictions = match.match_predictions
-          predictions.each do |p|
-            if (p.home_score_guess? || p.away_score_guess?) && p.result == "pending"
-              p.update_result
-
-              user_competition = UserCompetition.where(user_id: p.user_id, competition_id: params[:competition_id]).first
-              user_competition.score += p.result.to_i
-            end
-          end
-        end
+      match = Match.where(api_id: match_updated["id"]).first
+      match.home_score = match_updated["score"]["fullTime"]["home"]
+      match.away_score = match_updated["score"]["fullTime"]["away"]
+      match.status = match_updated["status"]
+      match.scheduled_date = match_updated["utcDate"]
+      match.save
+      
+      predictions = match.match_predictions
+      predictions.each do |p|
+        p.update_result
       end
     end
     redirect_to competition_path(@competition)
