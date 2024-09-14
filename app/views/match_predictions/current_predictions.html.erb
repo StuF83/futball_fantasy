@@ -9,7 +9,7 @@
           <% match = Match.find(pf.object[:match_id]) %>
           <div class="flex items-center">
             <p class="w-[12ch] text-center px-4 flex-shrink-0"> <%= match.home_team %></p>
-            <%= pf.number_field :home_score_guess, data: {prediction_increment_target: "homeScore"}, class: "flex-shrink w-full max-w-xs text-center px-2" %>
+            <%= pf.number_field :home_score_guess, data: {prediction_increment_target: "homeScore"}, class: "flex-shrink w-full max-w-xs text-center px-2", min: "0", max: "9" %>
             <button type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400" data-action="click->prediction-increment#increaseHome">
               Up
             </button>
@@ -20,7 +20,7 @@
           <p>vs</p>
           <div class="flex items-center">
             <p class=" w-[12ch] text-center px-4 flex-shrink-0"> <%= match.away_team %></p>
-            <%= pf.number_field :away_score_guess, data: {prediction_increment_target: "awayScore"}, class: "class: flex-shrink w-full max-w-xs text-center px-2" %>
+            <%= pf.number_field :away_score_guess, data: {prediction_increment_target: "awayScore"}, class: "flex-shrink w-full max-w-xs text-center px-2", min: "0", max: "9" %>
             <button type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400", data-action="click->prediction-increment#increaseAway">
               Up
             </button>
