@@ -12,9 +12,8 @@ class GameWeeksController < ApplicationController
 
     data = JSON.parse(api_data)
     data['matches'].each do |match_updated|
-      
-      match.transaction do
-        match = Match.lock!.where(api_id: match_updated["id"]).first
+      match do
+        match = Match.where(api_id: match_updated["id"]).first
         match.home_score = match_updated["score"]["fullTime"]["home"]
         match.away_score = match_updated["score"]["fullTime"]["away"]
         match.status = match_updated["status"]
@@ -33,7 +32,6 @@ class GameWeeksController < ApplicationController
           end
         end
       end
-
     end
     redirect_to competition_path(@competition)
   end
