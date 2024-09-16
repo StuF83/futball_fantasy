@@ -27,6 +27,8 @@ class CompetitionsController < ApplicationController
   def show
     @competition = Competition.find(params[:id])
     @game_weeks = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).order(:id)
+    # @game_week = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:id]}).where(:game_weeks => {:week_number => [@competition.match_day]})
+    @game_week_numbers = Range.new(1,38)
   end
 
 

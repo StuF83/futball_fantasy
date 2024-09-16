@@ -1,5 +1,12 @@
 class GameWeeksController < ApplicationController
 
+  def show
+    @competition = Competition.find(params[:competition_id])
+    # @game_week = GameWeek.find(params[:id])
+    @game_week = GameWeek.includes( :competitions => [:users], :matches => [:match_predictions] ).where(:competitions => {:id => params[:competition_id]}).where(:game_weeks => {:week_number => params[:id]})
+    # raise
+  end
+
   def update
     @competition = Competition.find(params[:competition_id])
     @game_week = GameWeek.find(params[:id])
