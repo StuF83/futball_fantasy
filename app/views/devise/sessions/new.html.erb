@@ -1,6 +1,6 @@
-<div class="flex justify-center items-center h-full font-inter">
-  <div class="bg-slate-300 mt-16 mb-16 p-12 rounded-xl text-2xl">
-    <h2 class="flex justify-center font-inter font-bold">Log in</h2>
+<div class="flex flex-col justify-center items-center min-h-screen overflow-auto">
+  <div class="flex flex-col justify-between bg-slate-300 p-12 rounded-xl text-2xl">
+    <h2 class="font-inter font-bold text-center">Welcome to Super 10</h2>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="field my-4">
         <%= f.label :email %><br />
@@ -20,11 +20,12 @@
       <% end %>
 
       <div class="actions my-4">
-        <%= f.submit "Log in", class: 'custom-button text-steelblue hover:text-green-700' %>
+        <div class="flex justify-center">
+          <%= f.submit "Log in", class: 'custom-button bg-steelblue text-white no-underline font-bold py-2 px-6 rounded-full hover:bg-steelblue hover:text-black transition duration-300 ease-in-out' %>
+        </div>
       </div>
     <% end %>
     <%= render "devise/shared/links" %>
   </div>
-
 </div>
 
