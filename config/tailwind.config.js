@@ -17,10 +17,26 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+        nunito: ['Nunito', 'sans-serif'],
+        ubuntu: ['Ubuntu', 'sans-serif'],
+        sourcesans: ['Source Sans Pro', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        lato: ['Lato', 'sans-serif'],
+        worksans: ['Work Sans', 'sans-serif'],
+        merriweathersans: ['Merriweather Sans', 'sans-serif'],
+        raleway: ['Raleway', 'sans-serif'],
+        dmsans: ['DM Sans', 'sans-serif'],
+      },
       colors: {
-        gold: '#FFD700',      // Gold color
-        silver: '#C0C0C0',    // Silver color
-        bronze: '#cd7f32',    // Bronze color
+        gold: '#FFD700',
+        silver: '#C0C0C0',
+        bronze: '#cd7f32',
+        steelblue: '#4682B4',
+        cadetblue: '#5F9EA0',
+        navy: '#000080',
+        powderblue: '#B0E0E6',
         
         MCI: {
           50: "#67e8f9",
@@ -142,9 +158,6 @@ module.exports = {
         WOLtext: {
           50: "#231F20",
         },
-      },
-      fontFamily: {
-        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
     },
   },
